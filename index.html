@@ -1,0 +1,1166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AyurKesha — From leaves, not from labs</title>
+<meta name="description" content="AyurKesha herbal hair colour. Ten Ayurvedic botanicals that turn grey hair natural black — no chemical ingredients, self apply, ready in 45 minutes.">
+<meta name="theme-color" content="#12100d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500;600&family=Tiro+Devanagari+Hindi&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --olive:#5b6427;--olive-d:#3c4219;--olive-l:#7d8a3a;
+  --cream:#f5ede0;--cream-2:#ece1cf;--paper:#fbf6ec;
+  --gold:#c9a45c;--gold-l:#e8cf96;--gold-d:#9c7a37;
+  --rust:#a3431f;--ink:#12100d;--ink-2:#1d1a15;--ink-3:#2a261f;
+  --serif:'Fraunces',Georgia,serif;--disp:'Cormorant Garamond',Georgia,serif;
+  --sans:'Jost',system-ui,sans-serif;--hi:'Tiro Devanagari Hindi',serif;--script:'Pinyon Script',cursive;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--ink);scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:var(--sans);font-weight:300;font-size:17px;line-height:1.65;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+::selection{background:var(--gold);color:var(--ink)}
+.wrap{width:min(1240px,100% - 32px);margin-inline:auto}
+.hi{font-family:var(--hi)}
+em{font-style:italic}
+
+/* ---------- grain + dust ---------- */
+.grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:90;opacity:.07;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation:grain 1.2s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+#dust{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+
+/* ---------- loader ---------- */
+.loader{position:fixed;inset:0;z-index:200;background:var(--ink);display:grid;place-items:center;transition:transform 1.1s var(--ease) .1s}
+.loader-in{display:flex;flex-direction:column;align-items:center;gap:18px}
+.loader .mandala{width:120px;height:120px}
+.loader .mandala path,.loader .mandala circle{stroke-dasharray:120;stroke-dashoffset:120;animation:draw 1.6s var(--ease) forwards}
+.loader .mandala [fill]:not([fill=none]){fill-opacity:0;animation:draw 1.6s var(--ease) forwards,fillin .8s ease 1s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fillin{to{fill-opacity:1}}
+.loader-word{font:500 28px/1 var(--serif);letter-spacing:.02em;color:var(--gold-l);opacity:0;animation:up .9s var(--ease) .5s forwards}
+.loader-bar{width:140px;height:1px;background:rgba(201,164,92,.2);overflow:hidden}
+.loader-bar i{display:block;height:100%;width:100%;background:var(--gold);transform:translateX(-100%);animation:bar 1.5s var(--ease) .2s forwards}
+@keyframes bar{to{transform:none}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+body.loaded .loader{transform:translateY(-101%)}
+
+/* ---------- cursor ---------- */
+.cur,.cur-ring{position:fixed;left:0;top:0;pointer-events:none;z-index:150;border-radius:50%;transform:translate(-50%,-50%)}
+.cur{width:6px;height:6px;background:var(--gold-l)}
+.cur-ring{width:38px;height:38px;border:1px solid rgba(232,207,150,.5);transition:width .35s var(--ease),height .35s var(--ease),background .35s,border-color .35s}
+.cur-ring.big{width:78px;height:78px;background:rgba(201,164,92,.08);border-color:var(--gold)}
+@media (hover:none){.cur,.cur-ring{display:none}}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 0;transition:padding .5s var(--ease),background .5s,backdrop-filter .5s,border-color .5s;border-bottom:1px solid transparent}
+.nav.scrolled{padding:12px 0;background:rgba(18,16,13,.72);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px);border-color:rgba(201,164,92,.14)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .mandala{width:34px;height:34px;transition:transform 1.2s var(--ease)}
+.brand:hover .mandala{transform:rotate(90deg)}
+.brand b{font:600 22px/1 var(--serif);letter-spacing:.005em;color:var(--cream)}
+.brand small{display:block;font:12px/1 var(--hi);color:var(--gold);margin-top:3px}
+.nav-links{display:flex;gap:34px;font-size:12px;letter-spacing:.24em;text-transform:uppercase;font-weight:400}
+.nav-links a{position:relative;opacity:.8;transition:opacity .3s}
+.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.nav-links a:hover{opacity:1}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+@media (max-width:900px){.nav-links{display:none}}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:12px;padding:17px 30px;border-radius:100px;font:500 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;position:relative;overflow:hidden;isolation:isolate;transition:color .4s,border-color .4s,transform .3s var(--ease)}
+.btn-gold{background:linear-gradient(135deg,#e8cf96,#c9a45c 50%,#a8833f);color:var(--ink)}
+.btn-gold::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%);transition:transform .9s var(--ease);z-index:-1}
+.btn-gold:hover::before{transform:translateX(120%)}
+.btn-ghost{border:1px solid rgba(232,207,150,.4);color:var(--gold-l)}
+.btn-ghost::before{content:"";position:absolute;inset:0;background:var(--gold-l);transform:translateY(101%);transition:transform .5s var(--ease);z-index:-1;border-radius:inherit}
+.btn-ghost:hover{color:var(--ink);border-color:var(--gold-l)}
+.btn-ghost:hover::before{transform:none}
+.btn .arr{width:16px;height:16px}
+.nav .btn{padding:12px 22px;font-size:11px;white-space:nowrap}
+@media (max-width:520px){.nav .btn{padding:11px 16px;font-size:10px;letter-spacing:.16em}.brand b{font-size:19px}.brand .mandala{width:28px;height:28px}.btn{padding:15px 22px}}
+
+/* ---------- type ---------- */
+.eyebrow{display:flex;align-items:center;gap:14px;font:500 11px/1.4 var(--sans);letter-spacing:.38em;text-transform:uppercase;color:var(--gold)}
+.eyebrow .ln{width:42px;height:1px;background:currentColor}
+.eyebrow.rust{color:var(--rust)}
+.h2{font:400 clamp(44px,6.4vw,96px)/.98 var(--serif);letter-spacing:-.025em}
+.h2 em{font-family:var(--disp);font-weight:400;color:var(--gold-l);letter-spacing:-.01em}
+.lead{font-size:clamp(16px,1.35vw,19px);color:rgba(245,237,224,.72);max-width:520px}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(40px);filter:blur(6px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease),filter 1.2s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none;filter:none}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden}
+.hero-glow{position:absolute;inset:0;background:
+  radial-gradient(60% 55% at 72% 50%,rgba(91,100,39,.55),transparent 70%),
+  radial-gradient(40% 40% at 70% 52%,rgba(201,164,92,.22),transparent 70%),
+  radial-gradient(80% 60% at 10% 100%,rgba(163,67,31,.14),transparent 70%)}
+.hero-lattice{position:absolute;inset:0;opacity:.07;mask-image:radial-gradient(70% 70% at 70% 50%,#000,transparent 75%);-webkit-mask-image:radial-gradient(70% 70% at 70% 50%,#000,transparent 75%)}
+.hero-hindi{position:absolute;right:-2vw;bottom:-4vw;font:clamp(140px,22vw,340px)/1 var(--hi);color:transparent;-webkit-text-stroke:1px rgba(201,164,92,.13);pointer-events:none;white-space:nowrap;user-select:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:40px}
+.hero-copy{position:relative;z-index:3}
+.h-hero{font:350 clamp(52px,7.6vw,124px)/.95 var(--serif);letter-spacing:-.035em;margin:28px 0 30px}
+.h-hero em{font-family:var(--disp);font-weight:400;font-style:italic;color:var(--gold-l);letter-spacing:-.015em}
+.h-hero .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.h-hero .w>span{display:inline-block;transform:translateY(110%);transition:transform 1.3s var(--ease);transition-delay:calc(var(--i)*.08s + .9s)}
+body.loaded .h-hero .w>span{transform:none}
+.hero .eyebrow,.hero .lead,.hero .ctas,.hero-meta{opacity:0;transform:translateY(24px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease)}
+body.loaded .hero .eyebrow{opacity:1;transform:none;transition-delay:.8s}
+body.loaded .hero .lead{opacity:1;transform:none;transition-delay:1.3s}
+body.loaded .hero .ctas{opacity:1;transform:none;transition-delay:1.45s}
+body.loaded .hero-meta{opacity:1;transform:none;transition-delay:1.6s}
+.ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+.hero-meta{display:flex;gap:44px;margin-top:56px;padding-top:28px;border-top:1px solid rgba(201,164,92,.18);max-width:460px}
+.hero-meta b{display:block;font:300 40px/1 var(--serif);color:var(--gold-l)}
+.hero-meta span{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;opacity:.6}
+
+.hero-stage{position:relative;height:640px;display:grid;place-items:center;cursor:grab;touch-action:pan-y;z-index:2}
+.hero-stage:active{cursor:grabbing}
+.hero-stage .scaler{opacity:0;transform:scale(calc(var(--k,1)*.85)) translateY(60px);transition:opacity 1.6s var(--ease) .7s,transform 1.8s var(--ease) .7s}
+body.loaded .hero-stage .scaler{opacity:1;transform:scale(var(--k,1))}
+.halo{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(232,207,150,.18),transparent 62%);filter:blur(10px)}
+.halo-ring{position:absolute;width:560px;height:560px;opacity:.22;animation:spin 80s linear infinite}
+.halo-ring.r2{width:430px;height:430px;opacity:.12;animation-direction:reverse;animation-duration:60s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.floor{position:absolute;bottom:62px;width:330px;height:46px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.75),transparent);filter:blur(6px)}
+.drag-hint{position:absolute;bottom:14px;display:flex;align-items:center;gap:10px;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:rgba(232,207,150,.6)}
+.drag-hint svg{width:30px;height:12px}
+.scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:rgba(232,207,150,.5);z-index:3}
+.scroll-cue span{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);animation:cue 2.2s var(--ease) infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+@media (max-width:980px){
+  .hero{padding-top:110px}
+  .hero-grid{grid-template-columns:1fr;gap:0}
+  .hero-stage{height:520px;order:-1;margin-top:-20px}
+  .hero-meta{gap:28px}
+  .scroll-cue{display:none}
+}
+
+/* ---------- 3D primitives ---------- */
+.scaler{transform:scale(var(--k,1))}
+.scene{perspective:1700px;perspective-origin:50% 40%;width:320px;height:392px}
+.rig{position:relative;width:320px;height:392px;transform-style:preserve-3d}
+.box{position:absolute;inset:0;transform-style:preserve-3d}
+.fc{position:absolute;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.fc>.shade{position:absolute;inset:0;background:#000;opacity:var(--sh,0);pointer-events:none;z-index:20}
+.fc>.sheen{position:absolute;inset:0;pointer-events:none;z-index:19;background:linear-gradient(105deg,transparent 35%,rgba(255,248,230,.16) 47%,rgba(255,248,230,.04) 53%,transparent 62%);background-size:320% 100%;background-position:var(--gx,50%) 0;mix-blend-mode:screen}
+.f-front,.f-back{left:0;top:0;width:320px;height:392px}
+.f-front{transform:translateZ(62px)}
+.f-back{transform:rotateY(180deg) translateZ(62px)}
+.f-right,.f-left{left:98px;top:0;width:124px;height:392px}
+.f-right{transform:rotateY(90deg) translateZ(160px)}
+.f-left{transform:rotateY(-90deg) translateZ(160px)}
+.f-bottom{left:0;top:134px;width:320px;height:124px;transform:rotateX(-90deg) translateZ(196px)}
+.lid{position:absolute;left:0;top:134px;width:320px;height:124px;transform-origin:50% 0;transform-style:preserve-3d;transform:translateY(-134px) translateZ(-62px) rotateX(calc(90deg + var(--open,0)*128deg))}
+.lid>.fc{left:0;top:0;width:100%;height:100%}
+.lid>.lid-in{transform:rotateX(180deg)}
+.inw{background:linear-gradient(#cfc2a6,#e9dfcb 70%);}
+.in-front{left:0;top:0;width:320px;height:392px;transform:translateZ(61px) rotateY(180deg)}
+.in-back{left:0;top:0;width:320px;height:392px;transform:translateZ(-61px)}
+.in-right{left:98px;top:0;width:124px;height:392px;transform:rotateY(90deg) translateZ(159px) rotateY(180deg)}
+.in-left{left:98px;top:0;width:124px;height:392px;transform:rotateY(-90deg) translateZ(159px) rotateY(180deg)}
+.in-bottom{left:0;top:134px;width:320px;height:124px;transform:rotateX(90deg) translateZ(-195px);background:#bfb193}
+.in-glow{position:absolute;left:0;top:134px;width:320px;height:124px;transform:rotateX(90deg) translateZ(186px);background:radial-gradient(closest-side,rgba(255,226,160,.95),rgba(232,180,90,.35) 60%,transparent);opacity:var(--open,0);pointer-events:none}
+
+.lattice{background-color:var(--olive);background-image:
+  radial-gradient(ellipse at 50% 35%,rgba(255,240,200,.08),transparent 65%),
+  repeating-linear-gradient(45deg,transparent 0 9px,rgba(226,194,124,.34) 9px 10px,transparent 10px 12px,rgba(226,194,124,.16) 12px 13px,transparent 13px 18px),
+  repeating-linear-gradient(-45deg,transparent 0 9px,rgba(226,194,124,.34) 9px 10px,transparent 10px 12px,rgba(226,194,124,.16) 12px 13px,transparent 13px 18px)}
+.c-cream{background:var(--cream);color:#2a2b14}
+.c-ink{background:var(--ink-2);color:var(--gold-l)}
+.scal-ink,.scal-cream{position:absolute;left:0;right:0;height:6px;background-size:12px 6px;background-repeat:repeat-x}
+.scal-ink{background-image:radial-gradient(circle at 50% 100%,var(--ink-2) 5.5px,transparent 6px)}
+.scal-cream{background-image:radial-gradient(circle at 50% 100%,var(--cream) 5.5px,transparent 6px)}
+.scal-down{background-image:radial-gradient(circle at 50% 0,var(--olive) 5.5px,transparent 6px)}
+.dia{position:relative;width:120px;height:8px;background:linear-gradient(var(--gold),var(--gold)) left center/46px 1px no-repeat,linear-gradient(var(--gold),var(--gold)) right center/46px 1px no-repeat}
+.dia::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;background:var(--rust);transform:translate(-50%,-50%) rotate(45deg)}
+
+/* box front */
+.bx-top{position:absolute;top:15px;left:0;right:0;text-align:center;font:500 6.5px/1 var(--sans);letter-spacing:.46em;text-transform:uppercase;color:#e6c787}
+.finial{position:absolute;left:159.5px;top:26px;width:1px;height:14px;background:var(--gold)}
+.finial::before{content:"";position:absolute;left:-2px;top:-3px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.pack{position:absolute;right:14px;top:12px;width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3dca2,#c9a45c 58%,#9c7a37);color:#2a2410;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(42,36,16,.6),0 4px 10px rgba(0,0,0,.3)}
+.pack span{font:600 5px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase}
+.pack b{font:700 19px/1 var(--serif);margin-top:1px}
+.arch-wrap{position:absolute;left:30px;top:38px;width:260px;height:214px}
+.arch{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 5px 10px rgba(0,0,0,.28))}
+.arch-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding-top:42px}
+.arch-in .mandala{width:74px;height:74px}
+.wm{font:600 40px/1 var(--serif);letter-spacing:-.01em;color:#2b2d12;margin-top:9px}
+.wm-hi{font:15px/1.2 var(--hi);color:var(--rust);margin-top:5px}
+.arch-in .dia{margin-top:7px}
+.seal45{position:absolute;left:236px;top:194px;width:64px;height:64px;transform:rotate(14deg);filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))}
+.bx-tag{position:absolute;top:262px;left:22px;font:italic 500 13px/1 var(--serif);color:#e6c787}
+.band{position:absolute;left:0;right:0;bottom:0;height:102px;background:var(--ink-2);text-align:center;padding-top:13px}
+.band .scal-ink{top:-6px}
+.band-t{font:600 17px/1 var(--serif);color:#d9b46a;position:relative;display:inline-block;padding:0 10px}
+.band-t::before{content:"";position:absolute;left:-30px;right:-30px;top:-6px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,164,92,.6),transparent)}
+.band-hi{font:10px/1.4 var(--hi);color:var(--gold-l);margin-top:3px}
+.icons5{display:flex;justify-content:space-around;padding:6px 10px 0}
+.icons5 div{display:flex;flex-direction:column;align-items:center;gap:3px;width:56px}
+.icons5 .ic{width:18px;height:18px;padding:3px;border:1px solid rgba(201,164,92,.7);border-radius:50%;color:var(--gold)}
+.icons5 span{font:500 5.6px/1.2 var(--sans);color:var(--cream)}
+
+/* box back */
+.bk-head{position:absolute;left:0;right:0;top:0;height:62px;display:flex;align-items:flex-end;padding:0 18px 12px;gap:8px}
+.bk-head b{font:600 21px/1 var(--serif);color:var(--cream)}
+.bk-head span{font:10px/1 var(--hi);color:var(--gold-l)}
+.bk-head .scal-cream{bottom:-0px}
+.bk-body{position:absolute;left:18px;right:18px;top:72px;bottom:12px}
+.bk-body h4{font:600 13px/1.2 var(--serif);color:var(--olive)}
+.bk-body p{font:400 6.4px/1.55 var(--sans);color:#3a3a22;margin-top:4px}
+.ing-box{border:1px solid var(--gold);border-radius:4px;padding:6px 8px;margin-top:7px}
+.ing-box h5{font:600 5.4px/1 var(--sans);letter-spacing:.24em;color:var(--rust);margin-bottom:4px}
+.ing-box ul{list-style:none;columns:2;column-gap:10px}
+.ing-box li{font:400 5.6px/1.75 var(--sans);color:#3a3a22;white-space:nowrap}
+.ing-box li b{font-weight:600}
+.ing-box li::before{content:"";display:inline-block;width:3px;height:5px;border-radius:50% 0;background:var(--rust);margin-right:4px;transform:rotate(25deg)}
+.bk-body .sm{font-size:6px}
+.dots{display:inline-flex;gap:6px;vertical-align:middle;margin-left:4px}
+.dots i{display:inline-block;width:6px;height:6px;border-radius:50%;border:.5px solid var(--gold)}
+.allergy-s{border:1px solid var(--rust);border-radius:4px;padding:5px 7px;margin-top:6px;font:400 5.5px/1.5 var(--sans);color:#3a3a22}
+.allergy-s b{color:var(--rust);font-weight:600}
+.bk-foot{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:flex-end}
+.bk-foot p{font-size:5.4px;line-height:1.55;margin:0}
+.barcode{width:84px;height:40px;background:#fff;padding:4px 5px 9px;position:relative}
+.barcode i{display:block;width:100%;height:100%}
+.barcode span{position:absolute;bottom:1px;left:0;right:0;text-align:center;font:500 5px/1 monospace;color:#111;letter-spacing:.12em}
+
+/* box left */
+.sd-arch{position:absolute;left:10px;right:10px;top:12px;height:78px;background:var(--cream);border-radius:52px 52px 0 0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:14px;box-shadow:inset 0 0 0 3px var(--cream),inset 0 0 0 4px var(--gold)}
+.sd-arch b{font:600 15px/1 var(--serif);color:#2b2d12}
+.sd-arch span{font:8px/1.4 var(--hi);color:var(--rust)}
+.sd-list{position:absolute;left:10px;right:8px;top:102px;display:flex;flex-direction:column;gap:9px}
+.sd-list div{display:flex;align-items:center;gap:6px}
+.sd-list .ic{width:17px;height:17px;flex:none;padding:3px;border:1px solid rgba(232,207,150,.7);border-radius:50%;color:var(--gold-l)}
+.sd-list span{font:600 6.4px/1.2 var(--sans);color:var(--cream)}
+.sd-list small{display:block;font:5.6px/1.2 var(--hi);color:var(--gold-l);font-weight:400}
+.pill{display:flex;align-items:center;justify-content:center;gap:5px;border-radius:30px;font:600 7.4px/1 var(--serif);padding:6px 8px}
+.pill .ic{width:10px;height:10px}
+.sd-pill{position:absolute;left:10px;right:10px;top:278px;background:var(--ink-2);color:var(--gold-l);border:1px solid var(--gold)}
+.sd-bot{position:absolute;left:0;right:0;bottom:0;height:72px;background:var(--ink-2);padding:12px 10px 0;text-align:center}
+.sd-bot .scal-ink{top:-6px}
+.sd-bot h6{font:600 8px/1 var(--serif);color:#d9b46a;margin-bottom:6px}
+.sd-bot ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px 4px;text-align:left}
+.sd-bot li{font:400 5.6px/1 var(--sans);color:var(--cream);display:flex;align-items:center;gap:3px;white-space:nowrap}
+.sd-bot li i{width:6px;height:6px;border-radius:50%;border:.5px solid var(--gold);flex:none}
+
+/* box right */
+.rt{position:absolute;inset:8px;border:1px solid rgba(201,164,92,.5);border-radius:4px;padding:12px 8px;text-align:center}
+.rt svg.swirl{width:22px;height:22px;margin:0 auto;color:var(--gold)}
+.rt h6{font:600 13px/1 var(--serif);color:#d9b46a;margin-top:6px}
+.rt .hi{font-size:7px;color:var(--gold-l)}
+.rt ol{list-style:none;text-align:left;margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.rt li{display:flex;gap:6px}
+.rt li i{flex:none;width:14px;height:14px;border:1px solid var(--gold);border-radius:50%;font:600 7px/12px var(--serif);text-align:center;color:var(--gold-l);font-style:normal}
+.rt li b{display:block;font:600 7px/1.2 var(--sans);color:var(--cream)}
+.rt li span{display:block;font:5.4px/1.35 var(--sans);color:rgba(245,237,224,.75)}
+.rt .pill{margin-top:12px;border:1px solid var(--gold);color:var(--gold-l)}
+.rt .pill.ol{background:var(--olive);border-color:var(--olive);color:var(--cream);margin-top:6px}
+.rt .pill.gr{background:#6b665b;border:0;color:var(--cream);font:500 5.6px/1.3 var(--sans);margin-top:6px}
+.rt .try{font:600 8px/1 var(--serif);color:#d9b46a;margin-top:8px}
+
+/* lid / bottom */
+.lid-out{padding:12px}
+.lid-frame{position:absolute;inset:10px;border:1px solid rgba(201,164,92,.55);border-radius:4px;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.lid-frame b{font:500 22px/1 var(--serif);color:#d9b46a;display:block}
+.lid-frame p{font:5.8px/1.6 var(--sans);color:var(--cream);margin-top:5px}
+.lid-frame .wbox{width:92px;height:54px;background:var(--paper);border-radius:3px;font:500 5px/1 var(--sans);color:#666;padding:5px;letter-spacing:.1em}
+.lid-in{background:linear-gradient(#e9dfcb,#d8cbb0)}
+.btm-mq{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 6px/1 var(--sans);letter-spacing:.24em;color:var(--gold-l);text-transform:uppercase;white-space:nowrap}
+
+/* ---------- pouch ---------- */
+.pouch{position:absolute;left:20px;top:14px;width:280px;height:364px;transform-style:preserve-3d}
+.pf{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;border-radius:4px}
+.p-back{transform:rotateY(180deg)}
+.p-green{position:absolute;left:0;right:0;top:0;height:226px}
+.crimp{position:absolute;left:0;right:0;top:0;height:16px;background:repeating-linear-gradient(90deg,rgba(0,0,0,.14) 0 1px,transparent 1px 3px);border-bottom:1px dashed rgba(232,207,150,.35)}
+.notch{position:absolute;top:30px;width:0;height:0;border-top:4px solid transparent;border-bottom:4px solid transparent}
+.notch.l{left:0;border-left:5px solid var(--gold)}
+.notch.r{right:0;border-right:5px solid var(--gold)}
+.zip{position:absolute;left:10px;right:10px;top:44px;border-top:1px dashed rgba(232,207,150,.3)}
+.p-top{position:absolute;top:64px;left:0;right:0;text-align:center;font:500 6px/1 var(--sans);letter-spacing:.42em;text-transform:uppercase;color:#e6c787}
+.p-arch{position:absolute;left:40px;top:76px;width:200px;height:132px}
+.p-arch .arch-in{padding-top:22px}
+.p-arch .mandala{width:46px;height:46px}
+.p-arch .wm{font-size:28px;margin-top:5px}
+.p-arch .wm-hi{font-size:10.5px;margin-top:3px}
+.p-arch .dia{margin-top:3px;width:96px;background-size:36px 1px,36px 1px}
+.p-tag{position:absolute;top:212px;left:0;right:0;text-align:center;font:italic 500 9.5px/1 var(--serif);color:#e6c787}
+.p-green .scal-cream{bottom:-0px}
+.p-cream{position:absolute;left:0;right:0;top:226px;bottom:0;background:var(--cream);padding:12px 14px 0}
+.p-row{display:grid;grid-template-columns:52px 1fr 60px;gap:10px;align-items:center}
+.p-shade{text-align:center}
+.p-shade i{display:block;width:18px;height:18px;margin:0 auto 4px;border-radius:50%;background:#141110;box-shadow:0 0 0 1.5px var(--gold)}
+.p-shade span,.p-wt span,.p-win span{display:block;font:600 4.8px/1 var(--sans);letter-spacing:.26em;text-transform:uppercase;color:#2a2b14}
+.p-shade b{display:block;font:600 9px/1.1 var(--serif);color:#2a2b14;margin-top:3px}
+.p-win div{height:46px;border-radius:7px;border:1.5px solid var(--gold);background:
+  radial-gradient(ellipse at 20% 10%,rgba(255,255,255,.55),transparent 40%),
+  radial-gradient(circle at 70% 60%,#7c8a3c 0 1px,transparent 1.5px) 0 0/5px 4px,
+  radial-gradient(circle at 30% 30%,#9aa65a 0 .8px,transparent 1.2px) 0 0/4px 5px,
+  linear-gradient(160deg,#8f9b4c,#6f7c33)}
+.p-win span{color:var(--rust);text-align:center;margin-top:5px}
+.p-wt{text-align:center}
+.p-wt b{display:block;font:700 22px/1 var(--serif);color:var(--rust);margin:3px 0 2px}
+.p-wt em{font:400 5.2px/1 var(--sans);color:#2a2b14;font-style:normal}
+.p-icons{display:flex;justify-content:space-around;margin-top:13px}
+.p-icons div{display:flex;flex-direction:column;align-items:center;gap:3px;width:50px}
+.p-icons .ic{width:16px;height:16px;padding:2.5px;border:1px solid #6b5a2d;border-radius:50%;color:#4a3f1f}
+.p-icons span{font:600 4.8px/1.2 var(--sans);color:#2a2b14;text-align:center}
+.gloss{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(115deg,transparent 20%,rgba(255,255,255,.18) 34%,transparent 46%),
+  linear-gradient(90deg,rgba(0,0,0,.18),transparent 6%,transparent 94%,rgba(0,0,0,.18)),
+  linear-gradient(rgba(255,255,255,.06),transparent 30%,rgba(0,0,0,.1));z-index:9}
+.pb-head{position:absolute;left:0;right:0;top:0;height:92px}
+.pb-head .lg{position:absolute;bottom:13px;left:0;right:0;text-align:center}
+.pb-head b{font:600 20px/1 var(--serif);color:var(--cream)}
+.pb-head span{font:9px/1 var(--hi);color:var(--gold-l);margin-left:4px}
+.pb-body{position:absolute;left:0;right:0;top:92px;bottom:0;background:var(--cream);padding:12px 16px;color:#2a2b14}
+.pb-body h6{font:600 10px/1 var(--serif);color:var(--olive);margin-bottom:6px}
+.pb-body h6 span{font:8px/1 var(--hi);color:var(--rust);margin-left:3px}
+.pb-body ol{list-style:none;display:flex;flex-direction:column;gap:3px}
+.pb-body li{display:flex;align-items:center;gap:5px;font:400 5.6px/1.2 var(--sans)}
+.pb-body li i{width:9px;height:9px;border-radius:50%;background:var(--olive);color:var(--cream);font:600 5.5px/9px var(--serif);text-align:center;font-style:normal;flex:none}
+.pb-body p{font:400 4.8px/1.5 var(--sans);margin-top:6px}
+.pb-body .allergy-s{font-size:4.8px;padding:4px 6px}
+.pb-batch{position:absolute;right:16px;bottom:14px;width:78px;height:30px;border:1px solid #cdb48a;border-radius:3px;background:var(--paper);font:500 4px/1 var(--sans);color:#888;padding:4px;letter-spacing:.1em}
+
+/* ---------- marquee ---------- */
+.marquee{position:relative;z-index:3;background:var(--olive);border-block:1px solid rgba(201,164,92,.35);overflow:hidden;padding:22px 0}
+.marquee .lattice{position:absolute;inset:0;opacity:.6}
+.mq-track{position:relative;display:flex;width:max-content;animation:mq 42s linear infinite}
+.mq-track span{display:flex;align-items:center;gap:34px;padding-right:34px;font:400 26px/1 var(--serif);color:var(--cream);white-space:nowrap}
+.mq-track span em{font-family:var(--disp);color:var(--gold-l)}
+.mq-track span i{width:10px;height:10px;background:var(--gold);transform:rotate(45deg);flex:none}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- philosophy ---------- */
+.philo{position:relative;z-index:3;background:var(--cream);color:#24250f;padding:clamp(100px,14vw,190px) 0;overflow:hidden}
+.philo-mandala{position:absolute;right:-12vw;top:50%;width:min(70vw,860px);height:auto;transform:translateY(-50%);opacity:.12}
+.philo-grid{position:relative;display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(40px,7vw,120px);align-items:start}
+.philo .h2{color:#24250f;margin-top:22px}
+.philo .h2 em{color:var(--olive)}
+.philo .hi-sub{font:clamp(18px,1.8vw,24px)/1.4 var(--hi);color:var(--rust);margin-top:16px}
+.philo .dia{margin-top:30px}
+.big-quote{font:400 clamp(26px,2.8vw,40px)/1.2 var(--disp);font-style:italic;color:var(--olive-d);margin-bottom:30px}
+.philo-copy p{color:#4a4a35;margin-bottom:18px;max-width:560px}
+.philo-copy p b{font-weight:500;color:#24250f}
+.pillars{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.pillars span{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;background:var(--ink-2);color:var(--cream);border:1px solid var(--gold);border-radius:6px;font:500 13px/1 var(--sans);letter-spacing:.04em}
+.pillars .ic{width:16px;height:16px;color:var(--gold)}
+.sign{margin-top:42px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#6a6a52}
+.sign span{display:block;font:44px/1.1 var(--script);color:var(--gold-d);letter-spacing:0;text-transform:none;margin-top:4px}
+.stats{position:relative;display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(80px,10vw,140px);border-top:1px solid rgba(91,100,39,.25)}
+.stats div{padding:34px 22px 0;border-right:1px solid rgba(91,100,39,.18)}
+.stats div:last-child{border-right:0}
+.stats b{display:block;font:300 clamp(48px,5.4vw,80px)/1 var(--serif);color:var(--olive);letter-spacing:-.03em}
+.stats b sup{font-size:.4em;vertical-align:top;margin-left:4px;color:var(--rust)}
+.stats span{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#6a6a52}
+@media (max-width:860px){.philo-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stats div:nth-child(2){border-right:0}.stats div{padding-bottom:30px}}
+
+/* ---------- unbox ---------- */
+.unbox{position:relative;z-index:3;height:460vh;background:radial-gradient(70% 50% at 65% 50%,rgba(91,100,39,.32),transparent 70%),var(--ink)}
+.sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.ub-copy{position:absolute;left:max(16px,calc((100vw - 1240px)/2));top:50%;transform:translateY(-50%);width:min(400px,36vw);z-index:4}
+.cap{position:absolute;left:0;top:50%;transform:translateY(-40%);opacity:0;transition:opacity .8s var(--ease),transform .8s var(--ease);pointer-events:none}
+.cap.on{opacity:1;transform:translateY(-50%);pointer-events:auto}
+.cap h3{font:350 clamp(36px,4.2vw,62px)/1 var(--serif);letter-spacing:-.025em;margin:22px 0 20px}
+.cap h3 em{font-family:var(--disp);color:var(--gold-l)}
+.cap p{color:rgba(245,237,224,.7);font-size:16px}
+.contents{list-style:none;margin-top:8px;display:grid;gap:10px}
+.contents li{display:flex;align-items:center;gap:14px;font-size:15px;padding-bottom:10px;border-bottom:1px solid rgba(201,164,92,.16)}
+.contents li b{font:300 26px/1 var(--serif);color:var(--gold-l);width:30px}
+.contents .ic{width:20px;height:20px;color:var(--gold);margin-left:auto}
+.ub-stage{position:absolute;inset:0;display:grid;place-items:center;padding-left:min(30vw,420px)}
+.ub-stage .scaler{transform:scale(var(--k,1)) translateY(var(--ty,0px))}
+.ub-progress{position:absolute;right:max(16px,calc((100vw - 1240px)/2));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:14px;font:500 10px/1 var(--sans);letter-spacing:.3em;color:rgba(232,207,150,.6)}
+.ub-progress .bar{width:1px;height:160px;background:rgba(201,164,92,.2);position:relative}
+.ub-progress .bar i{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--gold);transform-origin:top;transform:scaleY(var(--p,0))}
+@media (max-width:900px){
+  .ub-copy{left:16px;right:16px;width:auto;top:auto;bottom:26px;transform:none;height:220px}
+  .cap{top:auto;bottom:0;transform:translateY(20px)}
+  .cap.on{transform:none}
+  .cap h3{font-size:34px;margin:12px 0 10px}
+  .cap p{font-size:14px}
+  .contents{grid-template-columns:1fr 1fr;gap:4px 16px}
+  .contents li{font-size:13px;padding-bottom:6px}
+  .contents li b{font-size:18px;width:20px}
+  .ub-stage{padding-left:0;place-items:start center;padding-top:9vh}
+  .ub-progress{display:none}
+}
+
+/* ---------- botanicals ring ---------- */
+.bot{position:relative;z-index:3;height:400vh;background:linear-gradient(var(--ink),#171a0c 30%,#171a0c 70%,var(--ink))}
+.bot .sticky{display:flex;flex-direction:column}
+.bot-head{position:relative;padding-top:clamp(84px,12vh,130px);text-align:center;z-index:3}
+.bot-head .eyebrow{justify-content:center}
+.bot-head .h2{font-size:clamp(40px,5.4vw,80px);margin-top:16px}
+.ring-stage{position:relative;flex:1;min-height:0;display:grid;place-items:center;cursor:grab;touch-action:pan-y}
+.ring-stage:active{cursor:grabbing}
+.ring-scene{perspective:1500px;perspective-origin:50% 30%;width:200px;height:272px}
+.ring{position:relative;width:200px;height:272px;transform-style:preserve-3d}
+.card{position:absolute;inset:0;transform-style:preserve-3d}
+.card .cf,.card .cb{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.card .cf{background:linear-gradient(170deg,#fbf6ec,#efe5d2);color:#24250f;box-shadow:inset 0 0 0 1px rgba(201,164,92,.9),inset 0 0 0 5px #fbf6ec,inset 0 0 0 6px rgba(201,164,92,.5);padding:20px 18px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.card .cb{transform:rotateY(180deg);box-shadow:inset 0 0 0 1px var(--gold);display:grid;place-items:center}
+.card .cb .mandala{width:80px;height:80px;opacity:.9}
+.card .no{align-self:flex-start;font:italic 400 16px/1 var(--disp);color:var(--gold-d)}
+.card .hn{position:absolute;right:18px;top:20px;font:11px/1 var(--hi);color:var(--rust)}
+.card .ill{width:104px;height:104px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#fff,#f1e8d6);box-shadow:inset 0 0 0 1px rgba(201,164,92,.35),0 10px 22px -10px rgba(60,50,20,.35);display:grid;place-items:center;margin-top:10px}
+.card .ill svg{width:70px;height:70px}
+.card h4{font:500 23px/1.05 var(--serif);margin-top:18px;letter-spacing:-.01em;color:var(--olive-d)}
+.card .lt{font:italic 400 15px/1.2 var(--disp);color:#77705c;margin-top:4px}
+.card .ft{margin-top:auto;font:500 7.5px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--rust)}
+.card .gl{position:absolute;inset:0;border-radius:14px;pointer-events:none;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.4) 46%,transparent 60%);background-size:300% 100%;background-position:var(--gp,50%) 0;mix-blend-mode:soft-light}
+.bot-detail{position:relative;padding:0 16px clamp(24px,6vh,64px);text-align:center;z-index:3}
+.bot-detail .row{display:inline-flex;align-items:baseline;gap:14px}
+.bot-detail .num{font:italic 400 22px/1 var(--disp);color:var(--gold)}
+.bot-detail h3{font:400 clamp(28px,3vw,40px)/1 var(--serif);color:var(--cream)}
+.bot-detail .bd-hi{font:18px/1 var(--hi);color:var(--rust)}
+.bot-detail p{max-width:520px;margin:12px auto 0;color:rgba(245,237,224,.7);font-size:15px;min-height:2.6em}
+.bot-detail .fade{transition:opacity .35s,transform .35s var(--ease)}
+.bot-detail.sw .fade{opacity:0;transform:translateY(8px)}
+.ticks{display:flex;justify-content:center;gap:8px;margin-top:16px}
+.ticks i{width:18px;height:2px;background:rgba(201,164,92,.25);transition:background .4s,width .4s var(--ease)}
+.ticks i.on{background:var(--gold);width:34px}
+
+/* ---------- virtues ---------- */
+.virtues{position:relative;z-index:3;padding:clamp(110px,14vw,180px) 0;background:var(--ink)}
+.v-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:70px}
+.v-head .lead{justify-self:end}
+.v-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;perspective:1200px}
+.vcard{position:relative;padding:40px 34px 36px;border-radius:18px;background:linear-gradient(160deg,#211e18,#16140f);border:1px solid rgba(201,164,92,.16);transform-style:preserve-3d;transition:transform .6s var(--ease),border-color .4s;min-height:300px;overflow:hidden}
+.vcard:hover{border-color:rgba(201,164,92,.5)}
+.vcard::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),rgba(232,207,150,.14),transparent 50%);opacity:0;transition:opacity .4s;pointer-events:none}
+.vcard:hover::before{opacity:1}
+.vcard .vi{width:64px;height:64px;border-radius:50%;border:1px solid rgba(201,164,92,.6);display:grid;place-items:center;color:var(--gold-l);transform:translateZ(40px);background:radial-gradient(circle at 35% 30%,rgba(91,100,39,.55),transparent 70%)}
+.vcard .vi .ic{width:28px;height:28px}
+.vcard h3{font:400 28px/1.1 var(--serif);margin-top:34px;transform:translateZ(30px)}
+.vcard .vh{font:15px/1.4 var(--hi);color:var(--gold);margin-top:6px;transform:translateZ(24px)}
+.vcard p{color:rgba(245,237,224,.62);font-size:15px;margin-top:16px;transform:translateZ(18px)}
+.vcard .vn{position:absolute;right:28px;top:26px;font:italic 400 60px/1 var(--disp);color:rgba(201,164,92,.12)}
+@media (max-width:980px){.v-grid{grid-template-columns:1fr 1fr}.v-head{grid-template-columns:1fr}.v-head .lead{justify-self:start}}
+@media (max-width:620px){.v-grid{grid-template-columns:1fr}.vcard{min-height:0}}
+
+/* ---------- ritual ---------- */
+.ritual{position:relative;z-index:3;background:var(--cream);color:#24250f;padding:clamp(110px,14vw,180px) 0;overflow:hidden}
+.ritual .lattice-band{position:absolute;left:0;right:0;top:0;height:14px}
+.r-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,8vw,130px)}
+.r-side{position:sticky;top:120px;align-self:start}
+.ritual .h2{color:#24250f;margin-top:20px}
+.ritual .h2 em{color:var(--olive)}
+.r-side .hi-sub{font:24px/1.3 var(--hi);color:var(--rust);margin-top:12px}
+.r-side .lead{color:#55553f;margin-top:26px}
+.timers{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap}
+.timer{display:flex;align-items:center;gap:14px;padding:16px 22px;border-radius:14px;background:var(--ink-2);color:var(--cream)}
+.timer.ol{background:var(--olive)}
+.timer b{font:300 34px/1 var(--serif);color:var(--gold-l)}
+.timer span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;line-height:1.4;opacity:.85}
+.steps{position:relative;padding-left:0}
+.steps .track{position:absolute;left:39px;top:40px;bottom:40px;width:1px;background:rgba(91,100,39,.2)}
+.steps .track i{position:absolute;inset:0;background:linear-gradient(var(--gold),var(--rust));transform-origin:top;transform:scaleY(var(--rp,0))}
+.step{position:relative;display:grid;grid-template-columns:80px 1fr;gap:28px;padding:30px 0}
+.step .sn{width:80px;height:80px;border-radius:50%;background:var(--cream);border:1px solid rgba(91,100,39,.3);display:grid;place-items:center;position:relative;z-index:1;transition:background .6s var(--ease),border-color .6s,color .6s;color:var(--olive)}
+.step .sn .ic{width:30px;height:30px}
+.step.lit .sn{background:var(--olive);border-color:var(--olive);color:var(--gold-l)}
+.step .k{font:500 11px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--rust)}
+.step h3{font:400 clamp(30px,3vw,42px)/1.05 var(--serif);margin:10px 0 10px;letter-spacing:-.02em}
+.step p{color:#55553f;max-width:460px}
+.step .tag{display:inline-block;margin-top:12px;padding:6px 14px;border-radius:30px;border:1px solid rgba(163,67,31,.4);color:var(--rust);font-size:12px;letter-spacing:.08em}
+@media (max-width:900px){.r-grid{grid-template-columns:1fr}.r-side{position:relative;top:0}.step{grid-template-columns:60px 1fr;gap:20px}.step .sn{width:60px;height:60px}.steps .track{left:29px}}
+
+/* ---------- shades ---------- */
+.shades{position:relative;z-index:3;padding:clamp(110px,14vw,180px) 0;overflow:hidden;background:var(--ink)}
+.shades::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 60% at 30% 50%,var(--glow,rgba(91,100,39,.25)),transparent 70%);transition:background 1s}
+.s-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.orb-wrap{position:relative;display:grid;place-items:center;height:520px;perspective:1000px}
+.orb{position:relative;width:min(380px,74vw);aspect-ratio:1;border-radius:50%;background-color:var(--c,#16110e);transition:background-color 1s var(--ease);box-shadow:inset -40px -50px 90px rgba(0,0,0,.7),inset 26px 24px 70px rgba(255,255,255,.07),0 50px 90px -30px rgba(0,0,0,.9);overflow:hidden}
+.orb::before{content:"";position:absolute;inset:-20%;background:repeating-linear-gradient(100deg,rgba(255,255,255,.055) 0 1px,transparent 1px 3px,rgba(0,0,0,.12) 3px 4px,transparent 4px 7px);border-radius:50%;animation:spin 40s linear infinite}
+.orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.4),rgba(255,255,255,.06) 22%,transparent 40%),radial-gradient(circle at 75% 85%,rgba(232,207,150,.18),transparent 30%)}
+.orb-ring{position:absolute;width:min(470px,90vw);aspect-ratio:1;border:1px solid rgba(201,164,92,.25);border-radius:50%;transform:rotateX(70deg);animation:orbit 14s linear infinite}
+.orb-ring::after{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 18px var(--gold)}
+@keyframes orbit{to{transform:rotateX(70deg) rotateZ(360deg)}}
+.orb-label{position:absolute;bottom:20px;text-align:center}
+.orb-label b{display:block;font:400 34px/1 var(--serif)}
+.orb-label span{font:18px/1.6 var(--hi);color:var(--gold)}
+.swatches{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:44px}
+.sw{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:14px;border:1px solid rgba(201,164,92,.18);background:rgba(255,255,255,.02);cursor:pointer;text-align:left;color:var(--cream);font:inherit;transition:border-color .4s,background .4s,transform .4s var(--ease)}
+.sw:hover{transform:translateY(-3px)}
+.sw.on{border-color:var(--gold);background:rgba(201,164,92,.08)}
+.sw i{width:38px;height:38px;border-radius:50%;flex:none;box-shadow:inset -6px -8px 14px rgba(0,0,0,.6),inset 4px 4px 8px rgba(255,255,255,.12),0 0 0 1px rgba(201,164,92,.5)}
+.sw b{display:block;font:400 19px/1.1 var(--serif)}
+.sw span{font:13px/1.4 var(--hi);color:var(--gold)}
+.sw small{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-l);opacity:.7;margin-top:2px}
+@media (max-width:900px){.s-grid{grid-template-columns:1fr}.orb-wrap{height:420px}}
+@media (max-width:520px){.swatches{grid-template-columns:1fr}.orb-wrap{height:360px}.orb{width:min(280px,70vw)}.orb-ring{width:min(340px,86vw)}}
+
+/* ---------- order ---------- */
+.order{position:relative;z-index:3;padding:clamp(110px,14vw,180px) 0;background:linear-gradient(var(--ink),#1b1d0e);overflow:hidden}
+.o-card{position:relative;display:grid;grid-template-columns:1fr 1fr;border-radius:28px;overflow:hidden;border:1px solid rgba(201,164,92,.3);background:linear-gradient(140deg,#1f1c16,#14120e)}
+.o-vis{position:relative;min-height:620px;display:grid;place-items:center;overflow:hidden;perspective:1400px;cursor:pointer}
+.o-vis .lattice{position:absolute;inset:0;opacity:.85}
+.o-vis::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 50%,transparent 30%,rgba(18,16,13,.7))}
+.o-pouch{position:relative;width:280px;height:364px;transform-style:preserve-3d;z-index:2;transition:transform 1.2s var(--ease)}
+.o-pouch .pouch{left:0;top:0;transition:transform 1.2s var(--ease)}
+.o-pouch.flip .pouch{transform:rotateY(180deg)}
+.o-vis .hint{position:absolute;bottom:22px;left:0;right:0;text-align:center;z-index:3;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-l);opacity:.8}
+.o-info{padding:clamp(36px,5vw,70px)}
+.o-info h2{font:350 clamp(40px,4.4vw,64px)/1 var(--serif);letter-spacing:-.025em;margin:20px 0 6px}
+.o-info h2 em{font-family:var(--disp);color:var(--gold-l)}
+.o-info .hi-sub{font:18px/1.4 var(--hi);color:var(--gold)}
+.price{display:flex;align-items:baseline;gap:14px;margin:34px 0 6px}
+.price b{font:300 72px/1 var(--serif);color:var(--gold-l);letter-spacing:-.03em}
+.price span{font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+.o-list{list-style:none;margin:28px 0 34px;display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}
+.o-list li{display:flex;align-items:center;gap:12px;font-size:15px;color:rgba(245,237,224,.82)}
+.o-list .ic{width:18px;height:18px;color:var(--gold);flex:none}
+.allergy{margin-top:34px;padding:18px 20px;border:1px solid rgba(163,67,31,.6);border-radius:12px;font-size:13px;line-height:1.6;color:rgba(245,237,224,.7);background:rgba(163,67,31,.07)}
+.allergy b{color:#e0805a;font-weight:500}
+@media (max-width:980px){.o-card{grid-template-columns:1fr}.o-vis{min-height:520px}}
+@media (max-width:520px){.o-list{grid-template-columns:1fr}.price b{font-size:58px}}
+
+/* ---------- love ---------- */
+.love{position:relative;z-index:3;background:var(--cream);color:#24250f;padding:clamp(110px,14vw,170px) 0;text-align:center;overflow:hidden}
+.ty{font:clamp(84px,13vw,190px)/1 var(--script);background:linear-gradient(120deg,#9c7a37,#e2c27e 40%,#b08a45 60%,#d9b46a);-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .2em}
+.love .dh{font:clamp(26px,2.6vw,36px)/1.2 var(--hi);color:var(--rust);margin-top:4px}
+.love .eyebrow{justify-content:center;color:#3c3c28;margin-top:20px}
+.love .dia{margin:28px auto 0}
+.love h3{font:400 clamp(32px,3.4vw,48px)/1.1 var(--serif);margin-top:80px}
+.love h3+.hi{color:var(--rust);font-size:18px;margin-top:8px}
+.love .lp{max-width:540px;margin:16px auto 0;color:#55553f}
+.contact{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px;text-align:left}
+.cc{display:flex;align-items:center;gap:18px;padding:24px 24px;border-radius:16px;background:var(--paper);border:1px solid rgba(201,164,92,.45);transition:transform .5s var(--ease),box-shadow .5s,border-color .4s}
+.cc:hover{transform:translateY(-6px);box-shadow:0 26px 40px -24px rgba(60,50,20,.45);border-color:var(--gold)}
+.cc .ci{width:52px;height:52px;border-radius:50%;background:var(--olive);color:var(--cream);display:grid;place-items:center;flex:none}
+.cc .ci .ic{width:22px;height:22px}
+.cc small{display:block;font:500 10px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--rust)}
+.cc b{display:block;font:500 17px/1.3 var(--sans);margin-top:6px;word-break:break-word}
+.refer{display:inline-block;margin-top:46px;padding:22px 40px;border:1px dashed var(--rust);border-radius:12px;font:500 clamp(17px,1.7vw,21px)/1.4 var(--serif);color:var(--rust)}
+@media (max-width:860px){.contact{grid-template-columns:1fr}}
+
+/* ---------- footer ---------- */
+.foot{position:relative;z-index:3;background:var(--ink);padding:100px 0 40px;overflow:hidden;border-top:1px solid rgba(201,164,92,.15)}
+.f-word{font:400 clamp(80px,17vw,260px)/.85 var(--serif);letter-spacing:-.05em;text-align:center;background:linear-gradient(var(--gold-l),rgba(201,164,92,.15));-webkit-background-clip:text;background-clip:text;color:transparent}
+.f-hi{text-align:center;font:clamp(18px,2vw,26px)/1 var(--hi);color:var(--rust);margin-top:14px}
+.f-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin-top:80px;padding-top:40px;border-top:1px solid rgba(201,164,92,.15);font-size:14px;color:rgba(245,237,224,.6)}
+.f-grid h6{font:500 10.5px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.f-grid a:hover{color:var(--gold-l)}
+.f-base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:60px;font-size:12px;letter-spacing:.12em;color:rgba(245,237,224,.4)}
+@media (max-width:860px){.f-grid{grid-template-columns:1fr 1fr}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .grain{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><div class="loader-in"><div data-mandala="loader"></div><div class="loader-word">AyurKesha</div><div class="loader-bar"><i></i></div></div></div>
+<div class="grain"></div>
+<canvas id="dust"></canvas>
+<div class="cur"></div><div class="cur-ring"></div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="AyurKesha home"><span data-mandala></span><span><b>AyurKesha</b><small>आयुरकेशा</small></span></a>
+    <nav class="nav-links"><a href="#philosophy">Story</a><a href="#unbox">The Box</a><a href="#botanicals">Botanicals</a><a href="#ritual">Ritual</a><a href="#shades">Shades</a></nav>
+    <a href="#order" class="btn btn-gold mag">Order · ₹249</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="hero-lattice lattice"></div>
+  <div class="hero-hindi">आयुरकेशा</div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="ln"></span>Herbal hair colour · Made in India</p>
+      <h1 class="h-hero" id="heroTitle">From leaves,<br><em>not from labs.</em></h1>
+      <p class="lead">Grey to black, the herbal way. Ten time-tested Ayurvedic botanicals with no chemical ingredients — applied with your own hands, ready in forty-five minutes.</p>
+      <div class="ctas">
+        <a href="#unbox" class="btn btn-gold mag">Open the box <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#ritual" class="btn btn-ghost mag">The ritual</a>
+      </div>
+      <div class="hero-meta"><div><b>10</b><span>Botanicals</span></div><div><b>45</b><span>Minutes</span></div><div><b>0</b><span>Chemicals</span></div></div>
+    </div>
+    <div class="hero-stage" id="heroStage">
+      <div class="halo"></div>
+      <div class="halo-ring" data-mandala="ring"></div>
+      <div class="halo-ring r2" data-mandala="ring"></div>
+      <div class="floor"></div>
+      <div class="scaler" id="heroScaler"><div class="scene"><div class="rig" id="heroRig"></div></div></div>
+      <p class="drag-hint"><svg viewBox="0 0 30 12" fill="none" stroke="currentColor"><path d="M1 6h28M5 2L1 6l4 4M25 2l4 4-4 4"/></svg>Drag to turn</p>
+    </div>
+  </div>
+  <div class="scroll-cue"><span></span>Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee"><div class="lattice"></div><div class="mq-track" id="mq"></div></div>
+
+<!-- PHILOSOPHY -->
+<section class="philo" id="philosophy">
+  <div class="philo-mandala" data-mandala="big"></div>
+  <div class="wrap">
+    <div class="philo-grid">
+      <div>
+        <p class="eyebrow rust rv"><span class="ln"></span>Welcome to</p>
+        <h2 class="h2 rv" style="--d:.1s">Ayur<em>Kesha</em></h2>
+        <p class="hi-sub rv" style="--d:.2s">आयुरकेशा परिवार में आपका स्वागत है</p>
+        <div class="dia rv" style="--d:.3s"></div>
+      </div>
+      <div class="philo-copy">
+        <p class="big-quote rv">“Indian hair needs deeper, more holistic care than synthetic chemicals can ever provide.”</p>
+        <p class="rv" style="--d:.1s">We brought together <b>ten of the most powerful, time-tested Ayurvedic botanicals</b> — including Henna, Amla, Bhringraj and Shikakai — to create a complete hair rejuvenation ritual.</p>
+        <p class="rv" style="--d:.2s">We do not believe in quick synthetic fixes. We believe in building <b>long-term hair health from the roots up.</b></p>
+        <div class="pillars rv" style="--d:.3s"><span data-ic="leaf">100% Plant-Based</span><span data-ic="nochem">Zero Harmful Chemicals</span><span data-ic="spark">Pure Ayurvedic Wisdom</span></div>
+        <p class="sign rv" style="--d:.4s">With care,<span>Team AyurKesha</span></p>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="rv"><b data-count="10">0</b><span>Ayurvedic botanicals</span></div>
+      <div class="rv" style="--d:.1s"><b data-count="45">0</b><span>Minutes to colour</span></div>
+      <div class="rv" style="--d:.2s"><b data-count="3">0</b><span>Applications per pack</span></div>
+      <div class="rv" style="--d:.3s"><b data-count="0">0</b><span>Chemical ingredients</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- UNBOX -->
+<section class="unbox" id="unbox">
+  <div class="sticky">
+    <div class="ub-stage"><div class="scaler" id="ubScaler"><div class="scene"><div class="rig" id="ubRig"></div></div></div></div>
+    <div class="ub-copy">
+      <div class="cap on" data-i="0"><p class="eyebrow"><span class="ln"></span>I · The carton</p><h3>Grey to black,<br><em>the herbal way.</em></h3><p>An all-herbal, natural hair colour that turns grey hair natural black. Keep scrolling to open the box.</p></div>
+      <div class="cap" data-i="1"><p class="eyebrow"><span class="ln"></span>II · Inside</p><h3>Three sachets.<br><em>Three rituals.</em></h3><p>Each 40 g sachet is one complete application, sealed in a reusable zip pouch — so you can see the herbs inside.</p></div>
+      <div class="cap" data-i="2"><p class="eyebrow"><span class="ln"></span>III · Complete</p><h3>Everything you need.<br><em>Nothing you don’t.</em></h3>
+        <ul class="contents"><li><b>3</b>Herbal sachets<span data-ic="leaf"></span></li><li><b>3</b>Pairs of gloves<span data-ic="hand"></span></li><li><b>1</b>Comb<span data-ic="comb"></span></li><li><b>1</b>Shower cap<span data-ic="cap"></span></li><li><b>+</b>Tissue<span data-ic="spark"></span></li></ul></div>
+    </div>
+    <div class="ub-progress"><span>01</span><div class="bar"><i></i></div><span>03</span></div>
+  </div>
+</section>
+
+<!-- BOTANICALS -->
+<section class="bot" id="botanicals">
+  <div class="sticky">
+    <div class="bot-head"><p class="eyebrow rv"><span class="ln"></span>Time-tested Ayurvedic botanicals<span class="ln"></span></p><h2 class="h2 rv" style="--d:.1s">The power of <em>ten.</em></h2></div>
+    <div class="ring-stage" id="ringStage"><div class="scaler" id="ringScaler"><div class="scene ring-scene"><div class="ring" id="ring"></div></div></div></div>
+    <div class="bot-detail" id="bd">
+      <div class="row fade"><span class="num" id="bdNum">01</span><h3 id="bdName">Henna</h3><span class="bd-hi" id="bdHi">मेहंदी</span></div>
+      <p class="fade" id="bdDesc"></p>
+      <div class="ticks" id="ticks"></div>
+    </div>
+  </div>
+</section>
+
+<!-- VIRTUES -->
+<section class="virtues" id="virtues">
+  <div class="wrap">
+    <div class="v-head">
+      <div><p class="eyebrow rv"><span class="ln"></span>Natural and herbal colour</p><h2 class="h2 rv" style="--d:.1s">Pure by <em>nature,</em><br>kind by design.</h2></div>
+      <p class="lead rv" style="--d:.2s">Every promise printed on our carton, kept. No synthetic shortcuts — just leaves, seeds and fruit, ground fine and blended with care.</p>
+    </div>
+    <div class="v-grid" id="vgrid"></div>
+  </div>
+</section>
+
+<!-- RITUAL -->
+<section class="ritual" id="ritual">
+  <div class="lattice-band lattice"></div>
+  <div class="wrap r-grid">
+    <div class="r-side">
+      <p class="eyebrow rust rv"><span class="ln"></span>How to use</p>
+      <h2 class="h2 rv" style="--d:.1s">The <em>ritual.</em></h2>
+      <p class="hi-sub rv" style="--d:.2s">उपयोग विधि</p>
+      <p class="lead rv" style="--d:.3s">A salon-worthy ritual in the comfort of home. Five unhurried steps, applied on washed and dried hair.</p>
+      <div class="timers rv" style="--d:.4s"><div class="timer ol"><b>15–20</b><span>min<br>rest</span></div><div class="timer"><b>45</b><span>min<br>to colour</span></div></div>
+    </div>
+    <div class="steps" id="steps"><div class="track"><i></i></div></div>
+  </div>
+</section>
+
+<!-- SHADES -->
+<section class="shades" id="shades">
+  <div class="wrap s-grid">
+    <div class="orb-wrap rv">
+      <div class="orb-ring"></div>
+      <div class="orb" id="orb"></div>
+      <div class="orb-label"><b id="orbName">Natural Black</b><span id="orbHi">काला</span></div>
+    </div>
+    <div>
+      <p class="eyebrow rv"><span class="ln"></span>Available in four shades</p>
+      <h2 class="h2 rv" style="--d:.1s">Your colour,<br><em>naturally.</em></h2>
+      <p class="lead rv" style="--d:.2s;margin-top:22px">From the deepest natural black for grey hair to warm brown and rich burgundy — each shade drawn from the same ten botanicals.</p>
+      <div class="swatches rv" style="--d:.3s" id="swatches"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section class="order" id="order">
+  <div class="wrap">
+    <div class="o-card rv">
+      <div class="o-vis" id="oVis">
+        <div class="lattice"></div>
+        <div class="o-pouch" id="oPouch"></div>
+        <p class="hint">Tap the sachet to turn it over</p>
+      </div>
+      <div class="o-info">
+        <p class="eyebrow"><span class="ln"></span>Pack of 3 · Natural Black</p>
+        <h2>The AyurKesha<br><em>ritual box.</em></h2>
+        <p class="hi-sub">प्राकृतिक और हर्बल रंग</p>
+        <div class="price"><b>₹249</b><span>MRP · incl. of all taxes</span></div>
+        <ul class="o-list">
+          <li data-ic="leaf">3 × 40 g herbal sachets</li>
+          <li data-ic="hand">3 pairs of gloves</li>
+          <li data-ic="comb">1 application comb</li>
+          <li data-ic="cap">1 shower cap &amp; tissue</li>
+          <li data-ic="clock">Ready in 45 minutes</li>
+          <li data-ic="shield">For grey hair · self apply</li>
+        </ul>
+        <div class="ctas">
+          <a class="btn btn-gold mag" target="_blank" rel="noopener" href="https://wa.me/919619178792?text=Hello%20AyurKesha%2C%20I%27d%20like%20to%20order%20the%20herbal%20hair%20colour%20pack%20of%203.">Order on WhatsApp <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost mag" href="mailto:customercare@ayurkesha.com">Email us</a>
+        </div>
+        <div class="allergy"><b>Allergy test 48 h before every use.</b> Even natural ingredients can cause allergies. Mix a little powder into a paste, apply inside your elbow and leave for 24 h. If redness or itching appears, do not use. Avoid eyes, eyebrows and lashes. External use only. Keep away from children.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOVE -->
+<section class="love" id="love">
+  <div class="wrap">
+    <p class="eyebrow rv">A note for you</p>
+    <div class="ty rv" style="--d:.1s">Thank you</div>
+    <p class="dh rv" style="--d:.2s">धन्यवाद</p>
+    <p class="eyebrow rv" style="--d:.3s">For choosing AyurKesha</p>
+    <div class="dia rv" style="--d:.35s"></div>
+    <h3 class="rv">Loved the results?</h3>
+    <p class="hi rv">हमें ज़रूर बताएँ</p>
+    <p class="lp rv">Please use our product, and if you like the results, do share your feedback with us on Instagram.</p>
+    <div class="contact">
+      <a class="cc rv" href="https://www.instagram.com/ayurkesha" target="_blank" rel="noopener"><span class="ci" data-ic="insta"></span><span><small>Instagram</small><b>@ayurkesha</b></span></a>
+      <a class="cc rv" style="--d:.1s" href="mailto:feedback@ayurkesha.com"><span class="ci" data-ic="mail"></span><span><small>Email</small><b>feedback@ayurkesha.com</b></span></a>
+      <a class="cc rv" style="--d:.2s" href="https://wa.me/919619178792" target="_blank" rel="noopener"><span class="ci" data-ic="phone"></span><span><small>WhatsApp</small><b>96191 78792</b></span></a>
+    </div>
+    <p class="refer rv">Use it, and if you like it, kindly refer us to your friends.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="f-word">AyurKesha</div>
+    <p class="f-hi">From leaves, not from labs.</p>
+    <div class="f-grid">
+      <div><h6>Explore</h6><p><a href="#philosophy">Our story</a><br><a href="#botanicals">Botanicals</a><br><a href="#ritual">How to use</a><br><a href="#order">Order</a></p></div>
+      <div><h6>Customer care</h6><p><a href="tel:+919619178792">96191 78792</a><br><a href="mailto:customercare@ayurkesha.com">customercare@ayurkesha.com</a><br><a href="https://www.ayurkesha.com">www.ayurkesha.com</a></p></div>
+      <div><h6>Manufactured by</h6><p>Cosmo International, Bhatinda<br>Mfg. Lic. No.: 94-COS-PB</p></div>
+      <div><h6>Marketed by</h6><p>Aditya Enterprises, Sector-12, Kharghar, Navi Mumbai – 410210</p></div>
+    </div>
+    <div class="f-base"><span>© AyurKesha · Herbal hair colour · Made in India</span><span>Recyclable carton · Store cool &amp; dry</span></div>
+  </div>
+</footer>
+
+<script>
+(()=>{
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const range=(p,a,b)=>clamp((p-a)/(b-a));
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const lerp=(a,b,t)=>a+(b-a)*t;
+
+/* ---------------- icons ---------------- */
+const IC={
+  shield:'<path d="M12 3l7 3v5c0 4.6-3 8-7 10-4-2-7-5.4-7-10V6z"/><path d="M9 12l2 2 4-4"/>',
+  leaf:'<path d="M5 19C5 10 11 5 19 5c0 8-5 14-14 14z"/><path d="M5 19l8-8"/>',
+  hand:'<path d="M8 13V6.5a1.5 1.5 0 013 0V11m0-5.5a1.5 1.5 0 013 0V11m0-4a1.5 1.5 0 013 0v6.5c0 4-2.7 7-6.5 7-2.6 0-4.3-1.4-5.4-3.6L4 13.6a1.5 1.5 0 012.6-1.5L8 14"/>',
+  nodrop:'<path d="M12 3.5c3 4 5.5 7.2 5.5 10.5a5.5 5.5 0 01-11 0c0-3.3 2.5-6.5 5.5-10.5z"/><path d="M4 4l16 16"/>',
+  nochem:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 001.8 3h10.4a2 2 0 001.8-3l-5-9V3"/><path d="M3 3l18 18"/>',
+  clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  wind:'<path d="M3 9h11a2.5 2.5 0 10-2.5-2.5M3 14h15a2.5 2.5 0 11-2.5 2.5"/><path d="M4 21L21 4"/>',
+  spark:'<path d="M12 3c.6 4.6 2.4 6.4 7 7-4.6.6-6.4 2.4-7 7-.6-4.6-2.4-6.4-7-7 4.6-.6 6.4-2.4 7-7z"/><path d="M19 16v4M17 18h4"/>',
+  insta:'<rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.8" cy="7.2" r=".6" fill="currentColor"/>',
+  mail:'<rect x="3.5" y="6" width="17" height="12" rx="2"/><path d="M4 7l8 6 8-6"/>',
+  phone:'<path d="M6.5 4h3l1.5 4-2 1.3a10 10 0 005.7 5.7L16 13l4 1.5v3a2 2 0 01-2.2 2A15.5 15.5 0 014.5 6.2 2 2 0 016.5 4z"/>',
+  bowl:'<path d="M3 11h18a9 9 0 01-18 0z"/><path d="M9 4c0 2 2 2 2 4M13 4c0 2 2 2 2 4"/>',
+  water:'<path d="M12 3.5c3 4 5.5 7.2 5.5 10.5a5.5 5.5 0 01-11 0c0-3.3 2.5-6.5 5.5-10.5z"/><path d="M9.5 14.5a2.5 2.5 0 002.5 2.5"/>',
+  mix:'<path d="M3 12h18a9 9 0 01-18 0z"/><path d="M15 3l-3.5 9"/><path d="M8 16c2 1.2 5 1.2 8 0"/>',
+  comb:'<path d="M3.5 7.5h17v3.5h-17z"/><path d="M5.5 11v6M8.5 11v7M11.5 11v6M14.5 11v7M17.5 11v6"/>',
+  cap:'<path d="M4 15c0-5 3.6-9 8-9s8 4 8 9"/><path d="M3 15c3 2 15 2 18 0"/><path d="M6 15.5l-.5 2M10 16.5v2M14 16.5v2M18 15.5l.5 2"/>',
+  wash:'<path d="M7 4v4M12 3v5M17 4v4"/><path d="M4 12h16l-1.5 7a2 2 0 01-2 1.6h-9A2 2 0 015.5 19z"/>',
+  swirl:'<path d="M12 21c-5 0-8-3.5-8-8 0-4 3-7 7-7 3 0 5 2 5 5 0 2.4-1.8 4-4 4-1.8 0-3-1.2-3-3 0-1.4 1-2.3 2.2-2.3"/><path d="M12 3c1-1 3-1 3.5.5"/>'
+};
+const ic=(k,c='')=>`<svg class="ic ${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${IC[k]}</svg>`;
+
+/* ---------------- mandala ---------------- */
+function mandala(mode){
+  const R=mode==='mono'?'#c9a45c':'#a3431f', G=mode==='mono'?'#c9a45c':'#5b6427', C=mode==='mono'?'#c9a45c':'#e8cf96';
+  const fillLeaf=mode==='mono'?'none':G;
+  let p='';
+  for(let i=0;i<16;i++){const a=i*22.5;
+    p+=`<path transform="rotate(${a} 50 50)" d="M50 21C55 16 55 9 50 3 45 9 45 16 50 21Z" fill="none" stroke="${R}" stroke-width="1.1"/>`;
+    p+=`<circle transform="rotate(${a+11.25} 50 50)" cx="50" cy="9" r="1.3" fill="${R}" stroke="${R}" stroke-width=".2"/>`;}
+  p+=`<circle cx="50" cy="50" r="28" fill="none" stroke="${G}" stroke-width="1"/>`;
+  for(let i=0;i<12;i++)p+=`<path transform="rotate(${i*30} 50 50)" d="M50 40C54 35 54 29 50 24 46 29 46 35 50 40Z" fill="${fillLeaf}" stroke="${G}" stroke-width=".6"/>`;
+  for(let i=0;i<8;i++)p+=`<path transform="rotate(${i*45} 50 50)" d="M50 50C52.5 47.5 52.5 44.5 50 42 47.5 44.5 47.5 47.5 50 50Z" fill="${R}" stroke="${R}" stroke-width=".3"/>`;
+  p+=`<circle cx="50" cy="50" r="2.4" fill="${C}" stroke="${C}" stroke-width=".2"/>`;
+  return `<svg class="mandala" viewBox="0 0 100 100">${p}</svg>`;
+}
+$$('[data-mandala]').forEach(el=>{const m=el.dataset.mandala;el.outerHTML=mandala(m==='ring'||m==='big'?'mono':'').replace('class="mandala"',`class="mandala ${el.className}"`)});
+$$('[data-ic]').forEach(el=>{el.insertAdjacentHTML('afterbegin',ic(el.dataset.ic))});
+
+/* ---------------- packaging builders ---------------- */
+const ARCH=(w,h)=>`<svg class="arch" viewBox="0 0 260 214" preserveAspectRatio="none"><path d="M4 214V92C4 62 68 50 106 28 120 20 127 12 130 3 133 12 140 20 154 28 192 50 256 62 256 92V214Z" fill="#f5ede0"/><path d="M13 205V95C13 69 73 58 109 37 122 29 127 22 130 14 133 22 138 29 151 37 187 58 247 69 247 95V205Z" fill="none" stroke="#c9a45c" stroke-width="1.2" vector-effect="non-scaling-stroke"/></svg>`;
+function seal(){
+  let pts=[];for(let i=0;i<48;i++){const r=i%2?45:50,a=i/48*Math.PI*2;pts.push((50+r*Math.cos(a)).toFixed(1)+','+(50+r*Math.sin(a)).toFixed(1));}
+  return `<svg class="seal45" viewBox="0 0 100 100"><polygon points="${pts.join(' ')}" fill="#a3431f"/><circle cx="50" cy="50" r="37" fill="none" stroke="#f5ede0" stroke-width="1" stroke-dasharray="2 2.6"/><text x="50" y="37" text-anchor="middle" font-family="Jost" font-weight="600" font-size="9" letter-spacing="2" fill="#f5ede0">READY IN</text><text x="50" y="66" text-anchor="middle" font-family="Fraunces" font-weight="700" font-size="30" fill="#f5ede0">45</text><text x="50" y="78" text-anchor="middle" font-family="Jost" font-weight="600" font-size="9" letter-spacing="2" fill="#f5ede0">MIN</text></svg>`;
+}
+function barcode(){
+  const d='8900000000005';let s=[],x=0,k=0;
+  while(x<99){const b=.9+((+d[k%13]+k)%3)*.8, g=.8+((k*7)%3)*.7; s.push(`#111 ${x.toFixed(1)}% ${(x+b).toFixed(1)}%`,`transparent ${(x+b).toFixed(1)}% ${(x+b+g).toFixed(1)}%`);x+=b+g;k++;}
+  return `<div class="barcode"><i style="background:linear-gradient(90deg,${s.join(',')})"></i><span>8 900000 000005</span></div>`;
+}
+const SH=`<div class="sheen"></div><div class="shade"></div>`;
+const INGS=[['Henna','Lawsonia inermis'],['Shikakai','Acacia concinna'],['Amla','Emblica officinalis'],['Brahmi','Bacopa monnieri'],['Bhringraj','Eclipta alba'],['Neem','Azadirachta indica'],['Orange peel','Citrus sinensis'],['Reetha','Sapindus mukorossi'],['Tulsi','Ocimum sanctum'],['Coffee','seed powder']];
+const SHADES=[['Black','#16110e'],['Dark Brown','#3b2416'],['Brown','#6e3f22'],['Burgundy','#5c1621']];
+
+function boxHTML(withPouches){
+  const front=`<div class="fc f-front lattice">
+    <div class="bx-top">Herbal Hair Color</div><div class="finial"></div>
+    <div class="pack"><span>Pack of</span><b>3</b></div>
+    <div class="arch-wrap">${ARCH()}<div class="arch-in">${mandala()}<div class="wm">AyurKesha</div><div class="wm-hi">आयुरकेशा</div><div class="dia"></div></div></div>
+    ${seal()}
+    <div class="bx-tag">From leaves, not from labs.</div>
+    <div class="band"><div class="scal-ink"></div><div class="band-t">Natural and Herbal Color</div><div class="band-hi">प्राकृतिक और हर्बल रंग</div>
+      <div class="icons5">${[['nochem','No chemical<br>ingredients'],['leaf','All herbal<br>&amp; natural'],['hand','Self apply'],['nodrop','No skin<br>residue'],['wind','Odourless']].map(([k,t])=>`<div>${ic(k)}<span>${t}</span></div>`).join('')}</div></div>
+    ${SH}</div>`;
+  const back=`<div class="fc f-back c-cream">
+    <div class="bk-head lattice"><b>AyurKesha</b><span>आयुरकेशा</span><div class="scal-cream" style="bottom:-1px;top:auto;transform:scaleY(-1)"></div></div>
+    <div class="bk-body">
+      <h4>Grey to black, the herbal way</h4>
+      <p>An all-herbal, natural hair colour with no chemical ingredients that turns grey hair natural black. Apply it yourself at home: it leaves no residue on skin and is ready in 45 minutes.</p>
+      <div class="ing-box"><h5>10 NATURAL INGREDIENTS</h5><ul>${INGS.map(([a,b])=>`<li><b>${a}</b> ${b}</li>`).join('')}</ul></div>
+      <p class="sm"><b>Contains:</b> 3 sachets · 3 gloves · 1 comb · Tissue · 1 shower cap<br><b>Shade:</b> natural black · For grey hair</p>
+      <p class="sm"><b>Available in 4 shades:</b><span class="dots">${SHADES.map(s=>`<i style="background:${s[1]}"></i>`).join('')}</span></p>
+      <div class="allergy-s"><b>Allergy test 48 h before every use.</b> Even natural ingredients can cause allergies. Apply a little paste inside your elbow and leave for 24 h. If redness or itching appears, do not use. External use only. Keep away from children.</div>
+      <div class="bk-foot"><p><b>Mfd. by:</b> Cosmo International, Bhatinda<br><b>Mktd. by:</b> Aditya Enterprises, Navi Mumbai<br><b>MRP:</b> ₹249 (incl. of all taxes)<br><b>Care:</b> 9619178792 · www.ayurkesha.com<br>Country of origin: India</p>${barcode()}</div>
+    </div>${SH}</div>`;
+  const left=`<div class="fc f-left lattice">
+    <div class="sd-arch"><b>AyurKesha</b><span>आयुरकेशा</span></div>
+    <div class="sd-list">${[['nochem','No chemical ingredients','कोई रासायनिक तत्व नहीं'],['leaf','All herbal & natural','पूरी तरह हर्बल और प्राकृतिक'],['hand','Self apply','घर पर खुद लगाएँ'],['nodrop','No skin residue','त्वचा पर कोई अवशेष नहीं'],['clock','Ready in 45 minutes','45 मिनट में तैयार']].map(([k,t,h])=>`<div>${ic(k)}<span>${t}<small>${h}</small></span></div>`).join('')}</div>
+    <div class="pill sd-pill">${ic('shield')}Safe on Scalp</div>
+    <div class="sd-bot"><div class="scal-ink"></div><h6>Available in 4 colors</h6><ul>${SHADES.map(s=>`<li><i style="background:${s[1]}"></i>${s[0]}</li>`).join('')}</ul></div>
+    ${SH}</div>`;
+  const right=`<div class="fc f-right c-ink"><div class="rt">
+    ${ic('swirl','swirl')}<h6>How to use</h6><div class="hi">उपयोग विधि</div>
+    <ol>${[['Bowl','Put the powder in a clean, dry bowl.'],['Add water','Add water to make a paste.'],['Mix','Mix well.'],['Apply','After 15–20 min, apply on non-oily hair.'],['Wash','Wash hair 45 minutes after applying.']].map(([t,d],i)=>`<li><i>${i+1}</i><div><b>${t}</b><span>${d}</span></div></li>`).join('')}</ol>
+    <div class="pill">${ic('shield')}Safe on Scalp</div><div class="pill ol">${ic('clock')}Ready in 45 min</div><div class="pill gr">To be applied on washed and dried hair</div><div class="try">Try Herbal Way</div>
+    </div>${SH}</div>`;
+  const lid=`<div class="lid"><div class="fc lid-out c-ink"><div class="lid-frame"><div><b>AyurKesha</b><p>Herbal hair colour · Natural black<br>For grey hair · Self apply<br>Recyclable carton · Made in India</p></div><div class="wbox">BATCH · MFG · EXP</div></div>${SH}</div><div class="fc lid-in"></div></div>`;
+  const bottom=`<div class="fc f-bottom c-ink"><div class="btm-mq">Natural color ✦ No chemical ✦ Self apply ✦ No skin residue ✦ Ready in 45 min</div>${SH}</div>`;
+  const inner=`<div class="fc inw in-front"></div><div class="fc inw in-back"></div><div class="fc inw in-left"></div><div class="fc inw in-right"></div><div class="fc in-bottom"></div><div class="in-glow"></div>`;
+  const pouches=withPouches?[0,1,2].map(i=>pouchHTML(i)).join(''):'';
+  return `<div class="box">${inner}${pouches}${front}${back}${left}${right}${bottom}${lid}</div>`;
+}
+function pouchHTML(i){
+  return `<div class="pouch" data-p="${i}">
+    <div class="pf p-front">
+      <div class="p-green lattice"><div class="crimp"></div><div class="notch l"></div><div class="notch r"></div><div class="zip"></div>
+        <div class="p-top">Herbal Hair Color</div>
+        <div class="p-arch">${ARCH()}<div class="arch-in">${mandala()}<div class="wm">AyurKesha</div><div class="wm-hi">आयुरकेशा</div><div class="dia"></div></div></div>
+        <div class="p-tag">From leaves, not from labs.</div>
+        <div class="scal-cream" style="bottom:0"></div>
+      </div>
+      <div class="p-cream">
+        <div class="p-row">
+          <div class="p-shade"><i></i><span>Shade</span><b>Natural<br>Black</b></div>
+          <div class="p-win"><div></div><span>See the herbs inside</span></div>
+          <div class="p-wt"><span>Net wt.</span><b>40 g</b><em>One application</em></div>
+        </div>
+        <div class="p-icons">${[['shield','No chemical<br>ingredients'],['leaf','All herbal<br>&amp; natural'],['hand','Self<br>apply'],['nodrop','No skin<br>residue']].map(([k,t])=>`<div>${ic(k)}<span>${t}</span></div>`).join('')}</div>
+      </div>
+      <div class="gloss"></div>
+    </div>
+    <div class="pf p-back">
+      <div class="pb-head lattice"><div class="crimp"></div><div class="lg"><b>AyurKesha</b><span>आयुरकेशा</span></div><div class="scal-cream" style="bottom:0"></div></div>
+      <div class="pb-body">
+        <h6>How to use<span>उपयोग विधि</span></h6>
+        <ol>${['Put the powder in a clean, dry bowl.','Add water to make a paste.','Mix well.','After 15–20 min, apply on washed and dried hair.','Wash hair 45 minutes after applying.'].map((t,i)=>`<li><i>${i+1}</i>${t}</li>`).join('')}</ol>
+        <p><b>Ingredients:</b> Henna (Lawsonia inermis), Amla (Emblica officinalis), Bhringraj (Eclipta alba), Orange peel (Citrus sinensis), Tulsi (Ocimum sanctum), Shikakai (Acacia concinna), Brahmi (Bacopa monnieri), Neem (Azadirachta indica), Reetha (Sapindus mukorossi), Coffee seed powder.</p>
+        <div class="allergy-s"><b>Allergy test 48 h before every use.</b> Apply a little paste inside your elbow and wait 24 h. If redness or itching appears, do not use. Avoid eyes. External use only.</div>
+        <p><b>Mfd. by:</b> Cosmo International, Bhatinda · <b>Mktd. by:</b> Aditya Enterprises, Navi Mumbai<br><b>Net wt.:</b> 40 g · <b>Shade:</b> Natural Black · Reusable zip pouch: press to close.</p>
+      </div>
+      <div class="pb-batch">BATCH · MFG · EXPIRY</div>
+      <div class="gloss"></div>
+    </div>
+  </div>`;
+}
+
+$('#heroRig').innerHTML=boxHTML(false);
+$('#ubRig').innerHTML=boxHTML(true);
+$('#oPouch').innerHTML=pouchHTML(9);
+
+/* face shading */
+const L=(()=>{const v=[-.35,-.7,.62],m=Math.hypot(...v);return v.map(x=>x/m)})();
+const NORM={front:[0,0,1],back:[0,0,-1],right:[1,0,0],left:[-1,0,0],bottom:[0,1,0]};
+function faceRefs(root){
+  return {front:$('.f-front',root),back:$('.f-back',root),right:$('.f-right',root),left:$('.f-left',root),bottom:$('.f-bottom',root),lid:$('.lid-out',root),box:$('.box',root)};
+}
+function rot(n,rx,ry){
+  const a=ry*Math.PI/180,b=rx*Math.PI/180;
+  const x=n[0]*Math.cos(a)+n[2]*Math.sin(a), z1=-n[0]*Math.sin(a)+n[2]*Math.cos(a), y=n[1];
+  return [x, y*Math.cos(b)-z1*Math.sin(b), y*Math.sin(b)+z1*Math.cos(b)];
+}
+function shadeBox(F,rx,ry,open=0){
+  for(const k in NORM){const n=rot(NORM[k],rx,ry);const d=n[0]*L[0]+n[1]*L[1]+n[2]*L[2];F[k].style.setProperty('--sh',clamp(.42-.5*d,.0,.7).toFixed(3));}
+  const o=open*128*Math.PI/180, nl=rot([0,-Math.cos(o),-Math.sin(o)],rx,ry);
+  F.lid.style.setProperty('--sh',clamp(.42-.5*(nl[0]*L[0]+nl[1]*L[1]+nl[2]*L[2]),0,.7).toFixed(3));
+  const g=((ry%360)+360)%360; F.box.style.setProperty('--gx',(100-((g+40)%180)/180*100).toFixed(1)+'%');
+}
+
+/* ---------------- marquee ---------------- */
+const mqItems=['No chemical ingredients','<em>All herbal</em> &amp; natural','Self apply','No skin residue','Ready in <em>45 minutes</em>','Safe on scalp','Odourless','<em>From leaves,</em> not from labs'];
+const mqHalf=mqItems.map(t=>`<span>${t}<i></i></span>`).join('');
+$('#mq').innerHTML=mqHalf+mqHalf;
+
+/* ---------------- botanicals ---------------- */
+const Lf=(x,y,len,w,a,f)=>`<path transform="translate(${x} ${y}) rotate(${a})" d="M0 0C${w} ${-len*.3} ${w} ${-len*.75} 0 ${-len}C${-w} ${-len*.75} ${-w} ${-len*.3} 0 0Z" fill="${f}"/>`;
+const BOT={
+ Henna:`<path d="M12 36h40c0 11-9 18-20 18s-20-7-20-18z" fill="#fbf6ec" stroke="#cdb48a"/><path d="M15 36c5-9 29-9 34 0z" fill="#8a9a45"/>${Lf(40,28,17,5,55,'#5b6427')}${Lf(42,26,13,4,100,'#7d8a3a')}`,
+ Amla:`<circle cx="25" cy="39" r="14" fill="#b7cc78"/><path d="M25 25v28M19 26c-4 8-4 18 0 26M31 26c4 8 4 18 0 26" stroke="#8aa556" fill="none"/><circle cx="42" cy="43" r="11" fill="#c8da8e"/><path d="M42 32v22M37.5 33c-3 6-3 14 0 20M46.5 33c3 6 3 14 0 20" stroke="#8aa556" fill="none"/>${Lf(30,24,13,3.5,-35,'#5b6427')}${Lf(30,24,12,3.5,25,'#7d8a3a')}`,
+ Bhringraj:`<path d="M32 58V16" stroke="#4f6b2a" stroke-width="2"/>${[46,36,26].map((y,i)=>Lf(32,y,18-i*3,4,-115,'#5f8a3a')+Lf(32,y,18-i*3,4,115,'#4f7a2f')).join('')}<circle cx="32" cy="13" r="6" fill="#fbf6ec" stroke="#cdb48a"/><circle cx="32" cy="13" r="2.4" fill="#e0b84a"/>`,
+ 'Orange peel':`<path d="M10 40a22 22 0 0144 0z" fill="#e8922f"/><path d="M14 40a18 18 0 0136 0z" fill="#f6c46a"/>${[1,2,3,4,5].map(i=>{const a=Math.PI*i/6;return `<path d="M32 40L${(32-18*Math.cos(a)).toFixed(1)} ${(40-18*Math.sin(a)).toFixed(1)}" stroke="#e8922f" stroke-width="1.2"/>`}).join('')}<path d="M14 49c8 6 24 8 36 2" stroke="#e8922f" stroke-width="3.2" fill="none" stroke-linecap="round"/>`,
+ Tulsi:`<path d="M14 54C24 42 34 30 50 14" stroke="#4f6b2a" stroke-width="1.8" fill="none"/>${[[20,47,-40],[26,40,40],[32,33,-50],[38,26,35],[44,20,-45]].map(([x,y,a])=>Lf(x,y,11,4,a,'#5f8a3a')+Lf(x,y,9,3.5,a+80,'#77a04a')).join('')}<path d="M50 14l4-7" stroke="#7a4f7a" stroke-width="3.4" stroke-linecap="round"/>`,
+ Shikakai:`<path d="M14 50C18 34 30 20 46 12c3-1 5 2 3 4C36 26 26 38 22 52c-1 3-8 2-8-2z" fill="#5a2f1f"/><path d="M26 54C30 40 40 28 54 22c2 0 3 2 2 3C44 32 36 42 33 55c-1 2-7 2-7-1z" fill="#7a4126"/>`,
+ Brahmi:`<path d="M32 58V22" stroke="#4f6b2a" stroke-width="1.5"/>${[[20,42],[44,42],[32,23]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="10" fill="#5a9a3e"/><path d="M${x-7} ${y}h14M${x} ${y-7}v14" stroke="#3f7a2a" stroke-width=".9"/>`).join('')}`,
+ Neem:`<path d="M10 56C24 44 36 30 54 10" stroke="#4f6b2a" stroke-width="1.6" fill="none"/>${[[16,51],[22,45],[28,39],[34,33],[40,27],[46,20]].map(([x,y],i)=>Lf(x,y,15,2.8,i%2?-15:105,'#4f7a2f')).join('')}`,
+ Reetha:`<circle cx="22" cy="40" r="11" fill="#8a4a2a"/><circle cx="41" cy="44" r="10" fill="#a0592f"/><circle cx="32" cy="25" r="10" fill="#7a3f22"/><circle cx="41" cy="44" r="4.2" fill="#1d1a15"/><circle cx="18.5" cy="36" r="2.6" fill="#fff" opacity=".28"/><circle cx="28.5" cy="21" r="2.6" fill="#fff" opacity=".28"/>`,
+ 'Coffee seed':`<g transform="rotate(-25 24 34)"><ellipse cx="24" cy="34" rx="10" ry="14" fill="#4a2c1c"/><path d="M24 21c-4 8 4 18 0 26" stroke="#2a180e" stroke-width="1.6" fill="none"/></g><g transform="rotate(20 42 38)"><ellipse cx="42" cy="38" rx="9" ry="13" fill="#5e3a24"/><path d="M42 26c-4 7 4 17 0 24" stroke="#2a180e" stroke-width="1.6" fill="none"/></g>`
+};
+const ING=[
+ {n:'Henna',l:'Lawsonia inermis',h:'मेहंदी',d:'The heart of the blend — the leaf that has coloured hair across India for centuries.'},
+ {n:'Amla',l:'Emblica officinalis',h:'आंवला',d:'Indian gooseberry, treasured in Ayurveda to condition and strengthen every strand.'},
+ {n:'Bhringraj',l:'Eclipta alba',h:'भृंगराज',d:'Called the “king of hair” in Ayurvedic tradition — care that begins at the roots.'},
+ {n:'Orange peel',l:'Citrus sinensis',h:'संतरे का छिलका',d:'Sun-dried peel that lends a fresh, clean note to the paste.'},
+ {n:'Tulsi',l:'Ocimum sanctum',h:'तुलसी',d:'Holy basil — the household herb of purity, gentle on the scalp.'},
+ {n:'Shikakai',l:'Acacia concinna',h:'शिकाकाई',d:'Literally “fruit for hair” — the pod that cleanses softly, without stripping.'},
+ {n:'Brahmi',l:'Bacopa monnieri',h:'ब्राह्मी',d:'A calming herb, traditionally used to soothe the scalp.'},
+ {n:'Neem',l:'Azadirachta indica',h:'नीम',d:'The village pharmacy — purifying leaves for a clean, healthy scalp.'},
+ {n:'Reetha',l:'Sapindus mukorossi',h:'रीठा',d:'Soapnut — nature’s own lather, so the paste rinses away clean.'},
+ {n:'Coffee seed',l:'Seed powder',h:'कॉफ़ी बीज',d:'Finely ground seed powder that deepens the tone toward natural black.'}
+];
+const ring=$('#ring'), N=ING.length, STEP=360/N, RAD=395;
+ring.innerHTML=ING.map((g,i)=>`<div class="card" style="transform:rotateY(${i*STEP}deg) translateZ(${RAD}px)">
+  <div class="cf"><span class="no">${String(i+1).padStart(2,'0')}</span><span class="hn">${g.h}</span><div class="ill"><svg viewBox="0 0 64 64">${BOT[g.n]}</svg></div><h4>${g.n}</h4><p class="lt">${g.l}</p><span class="ft">Ayurvedic botanical</span><div class="gl"></div></div>
+  <div class="cb lattice">${mandala()}</div></div>`).join('');
+const cards=$$('.card',ring);
+$('#ticks').innerHTML=ING.map(()=>'<i></i>').join('');
+const ticks=$$('#ticks i');
+let activeIng=-1;
+function setIng(i){
+  if(i===activeIng)return;const first=activeIng<0;activeIng=i;const bd=$('#bd');
+  const apply=()=>{$('#bdNum').textContent=String(i+1).padStart(2,'0');$('#bdName').textContent=ING[i].n;$('#bdHi').textContent=ING[i].h;$('#bdDesc').textContent=ING[i].d;bd.classList.remove('sw')};
+  ticks.forEach((t,k)=>t.classList.toggle('on',k===i));
+  if(first)return apply();bd.classList.add('sw');clearTimeout(setIng.t);setIng.t=setTimeout(apply,220);
+}
+
+/* ---------------- virtues ---------------- */
+const V=[
+ ['nochem','No chemical ingredients','कोई रासायनिक तत्व नहीं','Nothing synthetic. Only leaves, seeds, pods and fruit — ground fine and blended by hand.'],
+ ['leaf','All herbal & natural','पूरी तरह हर्बल और प्राकृतिक','Ten Ayurvedic botanicals working together. One hundred percent plant-based.'],
+ ['hand','Self apply','घर पर खुद लगाएँ','A salon ritual you perform at home. Gloves, comb and shower cap are in the box.'],
+ ['nodrop','No skin residue','त्वचा पर कोई अवशेष नहीं','Colour that stays in your hair — not on your forehead, ears or hands.'],
+ ['clock','Ready in 45 minutes','45 मिनट में तैयार','Apply, unwind, rinse. Grey to natural black in under an hour.'],
+ ['shield','Safe on scalp','सिर की त्वचा के लिए सुरक्षित','Gentle botanicals your scalp recognises. Always patch-test 48 h before use.']
+];
+$('#vgrid').innerHTML=V.map(([k,t,h,d],i)=>`<article class="vcard rv" style="--d:${(i%3)*.1}s"><span class="vn">0${i+1}</span><div class="vi">${ic(k)}</div><h3>${t}</h3><p class="vh">${h}</p><p>${d}</p></article>`).join('');
+
+/* ---------------- ritual ---------------- */
+const S=[
+ ['bowl','Bowl','Put the powder in a clean, dry bowl.',''],
+ ['water','Add water','Add water, little by little, to make a smooth paste.',''],
+ ['mix','Mix','Mix well, then let the paste rest so the leaves can release their colour.','Rest 15–20 min'],
+ ['comb','Apply','Apply on washed, dried, non-oily hair — roots to tips, spreading evenly with the comb.','Wear the gloves'],
+ ['wash','Wash','Wash your hair 45 minutes after applying. Grey to natural black, the herbal way.','After 45 min']
+];
+$('#steps').insertAdjacentHTML('beforeend',S.map(([k,t,d,tag],i)=>`<div class="step rv"><div class="sn">${ic(k)}</div><div><p class="k">Step 0${i+1}</p><h3>${t}</h3><p>${d}</p>${tag?`<span class="tag">${tag}</span>`:''}</div></div>`).join(''));
+const stepEls=$$('.step');
+
+/* ---------------- shades ---------------- */
+const SHD=[
+ {n:'Natural Black',h:'काला',c:'#17120f',g:'rgba(91,100,39,.28)',t:'In this pack · for grey hair'},
+ {n:'Dark Brown',h:'गहरा भूरा',c:'#3b2416',g:'rgba(110,63,34,.3)',t:'Soft & deep'},
+ {n:'Brown',h:'भूरा',c:'#6e3f22',g:'rgba(160,90,40,.3)',t:'Warm & natural'},
+ {n:'Burgundy',h:'बरगंडी',c:'#5c1621',g:'rgba(140,30,50,.32)',t:'Rich & regal'}
+];
+$('#swatches').innerHTML=SHD.map((s,i)=>`<button class="sw${i?'':' on'}" data-i="${i}"><i style="background:${s.c}"></i><span><b>${s.n}</b><span>${s.h}</span><small>${s.t}</small></span></button>`).join('');
+$('#swatches').addEventListener('click',e=>{const b=e.target.closest('.sw');if(!b)return;const s=SHD[+b.dataset.i];
+  $$('.sw').forEach(x=>x.classList.toggle('on',x===b));$('#orb').style.setProperty('--c',s.c);$('.shades').style.setProperty('--glow',s.g);
+  $('#orbName').textContent=s.n;$('#orbHi').textContent=s.h;});
+
+/* ---------------- hero split ---------------- */
+(()=>{const h=$('#heroTitle');let i=0;
+  const wrapWords=node=>{[...node.childNodes].forEach(n=>{
+    if(n.nodeType===3){const frag=document.createDocumentFragment();n.textContent.split(/(\s+)/).forEach(w=>{if(!w)return;if(/^\s+$/.test(w)){frag.append(' ');return}const s=document.createElement('span');s.className='w';s.innerHTML=`<span style="--i:${i++}">${w}</span>`;frag.append(s)});n.replaceWith(frag)}
+    else if(n.nodeName==='EM')wrapWords(n);});};
+  wrapWords(h);})();
+
+/* ---------------- reveal + counters ---------------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');io.unobserve(e.target);
+  $$('[data-count]',e.target).concat(e.target.matches('[data-count]')?[e.target]:[]).forEach(countUp)}),{threshold:.15,rootMargin:'0px 0px -8% 0px'});
+$$('.rv').forEach(el=>io.observe(el));
+function countUp(el){const to=+el.dataset.count;if(el.dataset.done)return;el.dataset.done=1;const t0=performance.now(),dur=1600;
+  (function f(t){const k=clamp((t-t0)/dur);el.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0);}
+
+/* ---------------- cursor + magnetic + tilt ---------------- */
+const cur=$('.cur'),ring2=$('.cur-ring');let mx=innerWidth/2,my=innerHeight/2,rx2=mx,ry2=my;
+addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;},{passive:true});
+document.addEventListener('pointerover',e=>{ring2.classList.toggle('big',!!e.target.closest('a,button,.hero-stage,.ring-stage,.o-vis'))});
+$$('.mag').forEach(b=>{b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.28}px)`});b.addEventListener('pointerleave',()=>b.style.transform='')});
+$$('.vcard').forEach(c=>{c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+  c.style.transform=`rotateX(${(.5-y)*12}deg) rotateY(${(x-.5)*14}deg) translateZ(10px)`;c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%')});
+  c.addEventListener('pointerleave',()=>c.style.transform='')});
+
+/* order pouch */
+const oVis=$('#oVis'),oP=$('#oPouch');let oTx=0,oTy=0,oX=0,oY=0;
+oVis.addEventListener('click',()=>oP.classList.toggle('flip'));
+oVis.addEventListener('pointermove',e=>{const r=oVis.getBoundingClientRect();oTx=((e.clientX-r.left)/r.width-.5);oTy=((e.clientY-r.top)/r.height-.5)});
+oVis.addEventListener('pointerleave',()=>{oTx=0;oTy=0});
+
+/* ---------------- hero drag ---------------- */
+const stage=$('#heroStage'),heroRig=$('#heroRig'),heroF=faceRefs(heroRig);
+const H={rx:-14,ry:-34,vx:0,vy:0,drag:false,lx:0,ly:0};
+stage.addEventListener('pointerdown',e=>{H.drag=true;H.lx=e.clientX;H.ly=e.clientY;H.vx=H.vy=0;stage.setPointerCapture(e.pointerId)});
+stage.addEventListener('pointermove',e=>{if(!H.drag)return;const dx=e.clientX-H.lx,dy=e.clientY-H.ly;H.lx=e.clientX;H.ly=e.clientY;H.vy=dx*.4;H.vx=-dy*.25;H.ry+=H.vy;H.rx=clamp(H.rx+H.vx,-50,30)});
+const endDrag=()=>{H.drag=false};stage.addEventListener('pointerup',endDrag);stage.addEventListener('pointercancel',endDrag);
+
+/* ring drag */
+const rStage=$('#ringStage');let rOff=0,rVel=0,rDrag=false,rLx=0;
+rStage.addEventListener('pointerdown',e=>{rDrag=true;rLx=e.clientX;rStage.setPointerCapture(e.pointerId)});
+rStage.addEventListener('pointermove',e=>{if(!rDrag)return;const dx=e.clientX-rLx;rLx=e.clientX;rVel=dx*.25;rOff+=rVel});
+['pointerup','pointercancel'].forEach(t=>rStage.addEventListener(t,()=>rDrag=false));
+
+/* ---------------- sizing ---------------- */
+function size(){
+  const w=innerWidth,h=innerHeight,mob=w<980;
+  $('#heroScaler').style.setProperty('--k',(mob?clamp(Math.min(w/440,h/900),.62,1):clamp(Math.min(w/1350,h/860),.75,1.18)).toFixed(3));
+  $('#ubScaler').style.setProperty('--k',(mob?clamp(Math.min(w/820,h/1250),.38,.7):clamp(Math.min((w-420)/960,h/1000),.5,.95)).toFixed(3));
+  $('#ringScaler').style.setProperty('--k',clamp(Math.min(w/1100,(h-330)/440),.4,1).toFixed(3));
+}
+size();addEventListener('resize',size);
+
+/* ---------------- dust canvas ---------------- */
+const cv=$('#dust'),cx=cv.getContext('2d');let dpr=1,parts=[],leaves=[];
+function resizeCv(){dpr=Math.min(devicePixelRatio||1,2);cv.width=innerWidth*dpr;cv.height=innerHeight*dpr;}
+resizeCv();addEventListener('resize',resizeCv);
+const rnd=(a,b)=>a+Math.random()*(b-a);
+for(let i=0;i<(innerWidth<700?45:90);i++)parts.push({x:Math.random(),y:Math.random(),r:rnd(.4,1.7),vy:rnd(.00004,.00022),vx:rnd(-.00006,.00006),ph:rnd(0,6.28),z:rnd(.3,1)});
+for(let i=0;i<(innerWidth<700?4:8);i++)leaves.push({x:Math.random(),y:Math.random(),s:rnd(7,15),rot:rnd(0,6.28),vr:rnd(-.01,.01),vy:rnd(.00012,.00035),ph:rnd(0,6.28),z:rnd(.4,1)});
+function drawDust(t,sy){
+  const W=cv.width,Hh=cv.height;cx.clearRect(0,0,W,Hh);
+  for(const p of parts){p.y-=p.vy;p.x+=p.vx+Math.sin(t*.0004+p.ph)*.00005;if(p.y<-.02){p.y=1.02;p.x=Math.random()}
+    const y=((p.y-sy*.00005*p.z)%1+1)%1;const a=(.35+.65*Math.sin(t*.002+p.ph*3)**2)*.55*p.z;
+    cx.beginPath();cx.fillStyle=`rgba(232,207,150,${a})`;cx.arc(p.x*W,y*Hh,p.r*dpr*p.z,0,7);cx.fill();}
+  for(const l of leaves){l.y+=l.vy;l.rot+=l.vr;if(l.y>1.05){l.y=-.05;l.x=Math.random()}
+    const y=((l.y-sy*.00008*l.z)%1.1+1.1)%1.1-.05, x=l.x+Math.sin(t*.0006+l.ph)*.03;
+    cx.save();cx.translate(x*W,y*Hh);cx.rotate(l.rot);cx.scale(Math.cos(t*.0012+l.ph),1);const s=l.s*dpr*l.z;
+    cx.beginPath();cx.moveTo(0,-s);cx.bezierCurveTo(s*.6,-s*.5,s*.6,s*.5,0,s);cx.bezierCurveTo(-s*.6,s*.5,-s*.6,-s*.5,0,-s);
+    cx.fillStyle=`rgba(125,138,58,${.32*l.z})`;cx.fill();cx.strokeStyle=`rgba(232,207,150,${.25*l.z})`;cx.lineWidth=.6*dpr;cx.beginPath();cx.moveTo(0,-s);cx.lineTo(0,s);cx.stroke();cx.restore();}
+}
+
+/* ---------------- main loop ---------------- */
+const nav=$('#nav'),ub=$('#unbox'),bot=$('#botanicals'),ubRig=$('#ubRig'),ubF=faceRefs(ubRig),pouches=$$('.pouch',ubRig),caps=$$('.cap'),ritual=$('#ritual'),stepsEl=$('#steps');
+let pmx=0,pmy=0;
+function secP(el){const r=el.getBoundingClientRect();return clamp(-r.top/(r.height-innerHeight));}
+function inView(el){const r=el.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight}
+function frame(t){
+  const sy=scrollY;
+  nav.classList.toggle('scrolled',sy>40);
+  ring2.style.transform=`translate(${(rx2+=(mx-rx2)*.16)}px,${(ry2+=(my-ry2)*.16)}px) translate(-50%,-50%)`;
+  pmx+=((mx/(innerWidth||1)-.5)-pmx)*.05;pmy+=((my/(innerHeight||1)-.5)-pmy)*.05;
+  if(!isFinite(pmx)||!isFinite(pmy))pmx=pmy=0;
+
+  /* hero */
+  if(inView(stage)){
+    if(!H.drag){H.ry+=H.vy;H.vy*=.94;if(Math.abs(H.vy)<.3&&!reduce)H.ry+=.12;H.rx+=(-14-H.rx)*.02;}
+    const rx=H.rx-pmy*8, ry=H.ry+pmx*10, fl=reduce?0:Math.sin(t*.0011)*9;
+    heroRig.style.transform=`translateY(${fl}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    shadeBox(heroF,rx,ry);
+  }
+
+  /* unbox */
+  if(inView(ub)){
+    const p=secP(ub);
+    const open=ease(range(p,.06,.26));
+    const rises=[0,1,2].map(i=>ease(range(p,.24+i*.07,.48+i*.07)));
+    const fan=ease(range(p,.62,.86));
+    const ra=(rises[0]+rises[1]+rises[2])/3;
+    const rx=lerp(-20,-8,fan)-pmy*4, ry=lerp(-32,-6,fan)+lerp(0,0,p)+pmx*6+(reduce?0:Math.sin(t*.0007)*2);
+    ubRig.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+    $('.box',ubRig).style.setProperty('--open',open.toFixed(4));
+    $('#ubScaler').style.setProperty('--ty',lerp(ra*190,70,fan).toFixed(1)+'px');
+    const zs=[-30,0,30];
+    pouches.forEach((el,i)=>{const r=rises[i],d=i-1;
+      const x=d*272*fan, y=lerp(-300*r,i===1?-215:-185,fan), z=zs[i]+fan*(210+(i===1?45:0));
+      el.style.transform=`translate3d(${x}px,${y}px,${z}px) rotateY(${-ry*fan+d*-14*fan}deg) rotateZ(${d*7*fan}deg)`;});
+    shadeBox(ubF,rx,ry,open);
+    const ci=p<.3?0:p<.6?1:2;caps.forEach((c,i)=>c.classList.toggle('on',i===ci));
+    $('.ub-progress .bar').style.setProperty('--p',p.toFixed(3));
+  }
+
+  /* ring */
+  if(inView(bot)){
+    const p=secP(bot);
+    if(!rDrag){rOff+=rVel;rVel*=.93;}
+    const ang=-p*STEP*(N-1)+rOff;
+    ring.style.transform=`translateZ(-${RAD}px) rotateX(${-7+pmy*4}deg) rotateY(${ang}deg)`;
+    let best=0,bd=999;
+    cards.forEach((c,i)=>{let a=((i*STEP+ang)%360+540)%360-180;const f=Math.cos(a*Math.PI/180);
+      c.style.opacity=(.18+.82*clamp((f+1)/2)**1.6).toFixed(3);
+      c.firstElementChild.style.setProperty('--gp',(50+a*.8)+'%');
+      if(Math.abs(a)<bd){bd=Math.abs(a);best=i}});
+    setIng(best);
+  }
+
+  /* ritual */
+  if(inView(ritual)){
+    const r=stepsEl.getBoundingClientRect(),mid=innerHeight*.6;
+    const rp=clamp((mid-r.top)/r.height);stepsEl.style.setProperty('--rp',rp.toFixed(3));
+    stepEls.forEach(s=>{const b=s.getBoundingClientRect();s.classList.toggle('lit',b.top+40<mid)});
+  }
+
+  /* order pouch */
+  if(inView(oVis)){oX+=(oTx-oX)*.08;oY+=(oTy-oY)*.08;const fl=reduce?0:Math.sin(t*.0012)*8;
+    oP.style.transform=`translateY(${fl}px) rotateY(${oX*30-12}deg) rotateX(${-oY*18+4}deg)`;}
+
+  if(!reduce)drawDust(t,sy);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+setIng(0);
+
+/* ---------------- loader ---------------- */
+const t0=performance.now();
+const done=()=>{setTimeout(()=>document.body.classList.add('loaded'),Math.max(0,1700-(performance.now()-t0)))};
+(document.fonts?document.fonts.ready:Promise.resolve()).then(done);
+setTimeout(()=>document.body.classList.add('loaded'),4000);
+})();
+</script>
+</body>
+</html>
