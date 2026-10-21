@@ -421,7 +421,8 @@ body.loaded .hero-stage .scaler{opacity:1;transform:scale(var(--k,1))}
 .card h4{font:500 23px/1.05 var(--serif);margin-top:18px;letter-spacing:-.01em;color:var(--olive-d)}
 .card .lt{font:italic 400 15px/1.2 var(--disp);color:#77705c;margin-top:4px}
 .card .ft{margin-top:auto;font:500 7.5px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--rust)}
-.card .gl{position:absolute;inset:0;border-radius:14px;pointer-events:none;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.4) 46%,transparent 60%);background-size:300% 100%;background-position:var(--gp,50%) 0;mix-blend-mode:soft-light}
+.card .gl{position:absolute;inset:0;border-radius:14px;pointer-events:none;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.4) 46%,transparent 60%);background-size:300% 100%;background-position:var(--gp,50%) 0;opacity:.45}
+.card .cf::after,.card .cb::after{content:"";position:absolute;inset:0;border-radius:inherit;background:#12100d;opacity:var(--dim,0);pointer-events:none}
 .bot-detail{position:relative;padding:0 16px clamp(24px,6vh,64px);text-align:center;z-index:3}
 .bot-detail .row{display:inline-flex;align-items:baseline;gap:14px}
 .bot-detail .num{font:italic 400 22px/1 var(--disp);color:var(--gold)}
@@ -429,7 +430,7 @@ body.loaded .hero-stage .scaler{opacity:1;transform:scale(var(--k,1))}
 .bot-detail .bd-hi{font:18px/1 var(--hi);color:var(--rust)}
 .bot-detail p{max-width:520px;margin:12px auto 0;color:rgba(245,237,224,.7);font-size:15px;min-height:2.6em}
 .bot-detail .fade{transition:opacity .35s,transform .35s var(--ease)}
-.bot-detail.sw .fade{opacity:0;transform:translateY(8px)}
+.bot-detail.swap .fade{opacity:0;transform:translateY(8px)}
 .ticks{display:flex;justify-content:center;gap:8px;margin-top:16px}
 .ticks i{width:18px;height:2px;background:rgba(201,164,92,.25);transition:background .4s,width .4s var(--ease)}
 .ticks i.on{background:var(--gold);width:34px}
@@ -975,9 +976,9 @@ const ticks=$$('#ticks i');
 let activeIng=-1;
 function setIng(i){
   if(i===activeIng)return;const first=activeIng<0;activeIng=i;const bd=$('#bd');
-  const apply=()=>{$('#bdNum').textContent=String(i+1).padStart(2,'0');$('#bdName').textContent=ING[i].n;$('#bdHi').textContent=ING[i].h;$('#bdDesc').textContent=ING[i].d;bd.classList.remove('sw')};
+  const apply=()=>{$('#bdNum').textContent=String(i+1).padStart(2,'0');$('#bdName').textContent=ING[i].n;$('#bdHi').textContent=ING[i].h;$('#bdDesc').textContent=ING[i].d;bd.classList.remove('swap')};
   ticks.forEach((t,k)=>t.classList.toggle('on',k===i));
-  if(first)return apply();bd.classList.add('sw');clearTimeout(setIng.t);setIng.t=setTimeout(apply,220);
+  if(first)return apply();bd.classList.add('swap');clearTimeout(setIng.t);setIng.t=setTimeout(apply,220);
 }
 
 /* ---------------- virtues ---------------- */
@@ -1132,7 +1133,7 @@ function frame(t){
     ring.style.transform=`translateZ(-${RAD}px) rotateX(${-7+pmy*4}deg) rotateY(${ang}deg)`;
     let best=0,bd=999;
     cards.forEach((c,i)=>{let a=((i*STEP+ang)%360+540)%360-180;const f=Math.cos(a*Math.PI/180);
-      c.style.opacity=(.18+.82*clamp((f+1)/2)**1.6).toFixed(3);
+      c.style.setProperty('--dim',(.85*(1-clamp((f+1)/2)**1.6)).toFixed(3));
       c.firstElementChild.style.setProperty('--gp',(50+a*.8)+'%');
       if(Math.abs(a)<bd){bd=Math.abs(a);best=i}});
     setIng(best);
