@@ -120,7 +120,11 @@ src/components/
   ActionForm.tsx          ActionForm + useSubmit hook (THE way to build forms)
   AuthForm.tsx            login/register form
   OrderParts.tsx          Progress, Timeline, Items, Address
-  ui.tsx                  Badge, BoxVisual (CSS 3D box in the chosen shade)
+  ui.tsx                  Badge
+  box3d/                  the landing page's 3D carton for the product page: engine.ts (markup builders, lighting,
+                          drag/idle spin; copied from public/landing.html) + box3d.css (landing CSS scoped under .ak3d,
+                          lighting overlay renamed .shade → .shd to avoid the shade-button class). Box3D.tsx mounts it and
+                          updates the printed shade + glow tint. If the packaging changes in landing.html, update both.
 ```
 
 ## Data model and conventions

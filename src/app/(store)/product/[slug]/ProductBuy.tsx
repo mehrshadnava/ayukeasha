@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart, MAX_QTY } from "@/components/Cart";
-import { BoxVisual } from "@/components/ui";
+import Box3D from "@/components/box3d/Box3D";
 import { money } from "@/lib/format";
 
 type V = { id: string; name: string; hindiName: string; colorHex: string; inStock: boolean };
@@ -25,7 +25,7 @@ export default function ProductBuy({ product, variants, initialShade, freeShippi
 
   return (
     <div className="pdp">
-      <BoxVisual color={sel?.colorHex ?? "#17120f"} shade={sel?.name} hindi={sel?.hindiName} />
+      <Box3D shade={sel?.name ?? "Natural Black"} color={sel?.colorHex ?? "#17120f"} />
       <div>
         <p className="eyebrow">{product.tagline}</p>
         <h1 className="h1">{product.name.replace("AyurKesha ", "")}</h1>

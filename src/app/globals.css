@@ -122,12 +122,6 @@ textarea.input{min-height:110px;resize:vertical}
 @media (max-width:900px){.pdp{grid-template-columns:1fr;gap:28px}}
 .pdp-vis{position:sticky;top:96px;aspect-ratio:1;border-radius:24px;border:1px solid var(--line);background:radial-gradient(60% 60% at 50% 45%,rgba(91,100,39,.55),transparent 70%),radial-gradient(40% 40% at 50% 50%,rgba(201,164,92,.18),transparent 70%),var(--ink-2);display:grid;place-items:center;overflow:hidden}
 @media (max-width:900px){.pdp-vis{position:relative;top:0}}
-.box3d{width:46%;aspect-ratio:.72;border-radius:6px;background:linear-gradient(160deg,#6c7631,#3c4219 70%);box-shadow:0 40px 80px -20px rgba(0,0,0,.7),inset 0 0 0 1px rgba(232,207,150,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px;position:relative;transform:perspective(900px) rotateY(-16deg) rotateX(4deg);transition:transform .8s var(--ease)}
-.pdp-vis:hover .box3d{transform:perspective(900px) rotateY(-6deg) rotateX(2deg)}
-.box3d b{font:600 clamp(18px,2.4vw,28px)/1 var(--serif);color:var(--cream)}
-.box3d small{font:13px/1 var(--hi);color:var(--gold-l)}
-.box3d .sw{width:44%;height:8px;border-radius:4px;margin-top:12px;box-shadow:0 0 0 1px rgba(232,207,150,.4)}
-.box3d span{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-l)}
 .price{display:flex;align-items:baseline;gap:14px;margin:18px 0 6px}
 .price b{font:400 40px/1 var(--serif);color:var(--gold-l)}
 .price s{color:var(--muted)}
@@ -147,12 +141,6 @@ textarea.input{min-height:110px;resize:vertical}
 .trust div{border:1px solid var(--line);border-radius:12px;padding:12px;font-size:12.5px;color:var(--muted)}
 .trust b{display:block;color:var(--cream);font-weight:500;font-size:13px;margin-bottom:2px}
 
-/* product cards */
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
-.pcard{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--ink-2);transition:border-color .3s,transform .4s var(--ease)}
-.pcard:hover{border-color:var(--line-2);transform:translateY(-3px)}
-.pcard .pdp-vis{position:relative;top:0;border:0;border-radius:0;aspect-ratio:1.1}
-.pcard-body{padding:18px 20px 22px}
 
 /* cart lines */
 .line{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
