@@ -152,7 +152,7 @@ export async function updateProduct(_: FormState, fd: FormData) {
         active: fd.get("active") === "on",
       },
     });
-  }, ["/admin/products", "/shop"]);
+  }, ["/admin/products", "/product/ritual-box"]);
 }
 
 export async function updateVariant(_: FormState, fd: FormData) {

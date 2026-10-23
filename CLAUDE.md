@@ -96,7 +96,6 @@ src/app/
   layout.tsx              fonts (Fraunces, Cormorant Garamond, Jost, Tiro Devanagari Hindi) as CSS vars
   globals.css             design tokens + every class used by store, admin and invoice
   (store)/layout.tsx      header/footer, CartProvider, test-mode banner
-  (store)/shop            product grid
   (store)/product/[slug]  page.tsx (server) + ProductBuy.tsx (client: shade, qty, add/buy); ?shade=burgundy preselects
   (store)/cart            CartView (client)
   (store)/checkout        page.tsx prefills from user's last order; CheckoutForm.tsx does pincode check, POST /api/checkout, Razorpay modal / test dialog, verify
@@ -211,7 +210,7 @@ To re-test end to end, use the "ayurkesha" preview config, sign in as admin with
 
 ## Known gaps and ideas (not built)
 
-- `/shop` lists one product; the owner was asked whether to redirect it to `/product/ritual-box` until there are more products (undecided).
+- There is **no `/shop` page**: the owner disliked a second "home-like" screen, so it was removed (2026-10-23). `/shop` redirects to `/product/ritual-box` (next.config.ts), and every "Shop" link points there. If more products are added, ask before bringing back a listing page, and make it match the landing page's look.
 - No coupons or discount codes, COD, reviews, wishlists, multiple saved addresses, email verification, password reset, rate limiting on login and checkout, or cleanup job for abandoned PENDING_PAYMENT orders.
 - No retry-payment button on an unpaid order; the customer re-checks out from the saved cart.
 - No upload support on tickets (customers are asked for photos but can't attach them; they use WhatsApp or email).

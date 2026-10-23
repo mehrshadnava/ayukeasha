@@ -10,7 +10,7 @@ export default function CartView({ shippingFee, freeAbove }: { shippingFee: numb
     return (
       <div className="card">
         <p>Your cart is empty.</p>
-        <Link href="/shop" className="btn btn-gold mt">Shop the ritual box</Link>
+        <Link href="/product/ritual-box" className="btn btn-gold mt">Shop the ritual box</Link>
       </div>
     );
   const shipping = subtotal >= freeAbove ? 0 : shippingFee;

@@ -91,7 +91,7 @@ export default function CheckoutForm({ prefill, states, mode, shippingFee, freeA
   }
 
   if (!ready) return <p className="muted">Loading…</p>;
-  if (!lines.length && !busy && !testPay) return <div className="card"><p>Your cart is empty.</p><Link href="/shop" className="btn btn-gold mt">Shop now</Link></div>;
+  if (!lines.length && !busy && !testPay) return <div className="card"><p>Your cart is empty.</p><Link href="/product/ritual-box" className="btn btn-gold mt">Shop now</Link></div>;
 
   const fld = (k: keyof Prefill, label: string, props: React.InputHTMLAttributes<HTMLInputElement> = {}, full = false) => (
     <label className={`field${full ? " full" : ""}`}>
