@@ -34,11 +34,12 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
   const canCancel = paid && CANCELLABLE.includes(o.status as OrderStatus);
   const returnOpen = o.status === "DELIVERED" && o.deliveredAt && !o.returnRequest && (Date.now() - o.deliveredAt.getTime()) / 86400000 <= config.returnWindowDays;
   const q = t ? `?t=${t}` : "";
+  const firstName = o.name.trim().split(/\s+/)[0];
 
   return (
     <div className="wrap">
       <div className="page-head">
-        {placed && o.paymentStatus === "PAID" && <p className="notice ok" style={{ marginBottom: 24 }}>Thank you! Your order is confirmed. A confirmation has been sent to {o.email}. Bookmark this page to track your order.</p>}
+        {placed && o.paymentStatus === "PAID" && <p className="notice ok" style={{ marginBottom: 24 }}>Your order is confirmed. We&rsquo;ve emailed the details to {o.email} — bookmark this page to track your order.</p>}
         <p className="eyebrow">Order {o.number}</p>
         <h1 className="h1 od-title">{ORDER_STATUS[o.status as OrderStatus] ?? o.status}</h1>
         <div className="row">
@@ -97,34 +98,42 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
             </div>
           )}
 
-          <div className="grid-2e">
-            <div className="card">
-              <h2 className="h3">Delivering to</h2>
-              <Address o={o} />
-            </div>
-            <div className="card">
-              <h2 className="h3">Need help?</h2>
-              {o.tickets.map((tk) => <p key={tk.id} className="small"><Link className="link" href={`/support/${tk.number}?t=${tk.accessToken}`}>Ticket {tk.number}</Link> · {tk.subject}</p>)}
-              <p className="small muted">Questions about this order? We usually reply within a working day.</p>
-              <Link className="btn btn-ghost btn-sm mt-s" href={`/support?order=${o.number}`}>Contact support</Link>
-              {canCancel && (
-                <details className="od-cancel">
-                  <summary>Cancel this order</summary>
-                  <ActionForm action={cancelOrder} submit="Cancel order" variant="danger" small confirm="Cancel this order? Your payment will be refunded in full.">
-                    <input type="hidden" name="order" value={o.number} /><input type="hidden" name="t" value={t ?? ""} />
-                    <label className="field"><span>Reason (optional)</span><input className="input" name="reason" maxLength={300} /></label>
-                  </ActionForm>
-                </details>
-              )}
-            </div>
-          </div>
+          {paid && o.status !== "CANCELLED" && (
+            <section className="card ty-note" aria-label="A note from AyurKesha">
+              <p className="ty-word">Thank you</p>
+              <p className="ty-hi">धन्यवाद</p>
+              <div className="ty-body">
+                <p>Dear {firstName},</p>
+                <p>Thank you for choosing AyurKesha. Your order is more than hair colour to us — it began with hand-picked henna and ten time-tested Ayurvedic botanicals, and it now becomes part of your ritual.</p>
+                <p>Before your first application, please do the allergy patch test 48 hours ahead. Then take your time, enjoy the forty-five minutes, and let nature do the rest.</p>
+                <p>If you love the results, we&rsquo;d be so grateful if you shared them with us on Instagram <a className="link" href="https://www.instagram.com/ayurkesha" target="_blank" rel="noopener">@ayurkesha</a> — and told a friend or two.</p>
+              </div>
+              <p className="ty-sign">With gratitude,<span>The AyurKesha family</span></p>
+            </section>
+          )}
         </div>
 
-        <aside className="card od-sum">
-          <h2 className="h2">Summary</h2>
-          <Items order={o} items={o.items} />
-          {paid && <Link className="btn btn-ghost btn-sm btn-block mt" href={`/invoice/${o.number}${q}`} target="_blank">Download invoice</Link>}
-        </aside>
+        <div className="od-side">
+          <aside className="card">
+            <h2 className="h2">Summary</h2>
+            <Items order={o} items={o.items} />
+            {paid && <Link className="btn btn-ghost btn-sm btn-block mt" href={`/invoice/${o.number}${q}`} target="_blank">Download invoice</Link>}
+            {o.tickets.map((tk) => <p key={tk.id} className="small mt-s"><Link className="link" href={`/support/${tk.number}?t=${tk.accessToken}`}>Support ticket {tk.number}</Link> · {tk.subject}</p>)}
+            {canCancel && (
+              <details className="od-cancel">
+                <summary>Cancel this order</summary>
+                <ActionForm action={cancelOrder} submit="Cancel order" variant="danger" small confirm="Cancel this order? Your payment will be refunded in full.">
+                  <input type="hidden" name="order" value={o.number} /><input type="hidden" name="t" value={t ?? ""} />
+                  <label className="field"><span>Reason (optional)</span><input className="input" name="reason" maxLength={300} /></label>
+                </ActionForm>
+              </details>
+            )}
+          </aside>
+          <div className="card">
+            <h2 className="h3">Delivering to</h2>
+            <Address o={o} />
+          </div>
+        </div>
       </div>
     </div>
   );

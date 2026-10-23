@@ -41,10 +41,12 @@ export async function markPaid(orderId: string, paymentId: string, source: Sourc
   await addEvent(orderId, `Payment of ${money(order.total)} received. Order confirmed.`, { status: "CONFIRMED", source });
   if (short.length) await addEvent(orderId, `Stock shortfall at payment time: ${short.join(", ")}. Restock before packing.`, { internal: true });
 
-  await sendMail(order.email, `Order ${order.number} confirmed`, [
-    `Namaste ${order.name.split(" ")[0]}, thank you for choosing AyurKesha.`,
-    `We have received your payment of ${money(order.total)}. ${order.items.map((i) => `${i.quantity} × ${i.productName} (${i.variantName})`).join(", ")}.`,
-    `We'll email you again as soon as it ships.`,
+  await sendMail(order.email, `Thank you — order ${order.number} is confirmed`, [
+    `Dear ${order.name.trim().split(/\s+/)[0]},`,
+    `Thank you for choosing AyurKesha. Your order is more than hair colour to us — it began with hand-picked henna and ten time-tested Ayurvedic botanicals, and it now becomes part of your ritual.`,
+    `We've received your payment of ${money(order.total)} for ${order.items.map((i) => `${i.quantity} × ${i.productName.replace(/^AyurKesha\s+/, "")} (${i.variantName})`).join(", ")}. We'll email you again as soon as it ships.`,
+    `Before your first application, please do the allergy patch test 48 hours ahead. If you love the results, we'd be so grateful if you shared them with us on Instagram @ayurkesha.`,
+    `With gratitude, the AyurKesha family`,
   ], { label: "View your order", url: orderUrl(order) });
   return true;
 }
