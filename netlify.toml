@@ -2,6 +2,10 @@
   command = "npm run build"
   publish = ".next"
 
+# Runs the Next.js server parts (pages, API routes, server actions) as Netlify Functions.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 [build.environment]
   NODE_VERSION = "24"
   NEXT_TELEMETRY_DISABLED = "1"
