@@ -571,6 +571,61 @@ body.loaded .hero-stage .scaler{opacity:1;transform:scale(var(--k,1))}
 .o-alt span{display:block;margin-bottom:4px}
 .o-load{grid-column:1/-1;font-size:14px;opacity:.6}
 .o-buy .btn{white-space:nowrap;justify-content:center}
+
+/* sachet fan: shows as many sachets as the selected pack */
+.o-stage{position:relative;z-index:2;transform:scale(var(--ok,1));transform-style:preserve-3d}
+.o-pouch .fan{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .9s var(--ease),opacity .6s var(--ease)}
+.o-pouch .fan[data-i="1"]{transform:translate3d(0,0,30px)}
+.o-pouch.n-1 .fan[data-i="0"],.o-pouch.n-1 .fan[data-i="2"]{transform:translate3d(0,10px,-40px) scale(.92);opacity:0;pointer-events:none}
+.o-pouch.n-2 .fan[data-i="0"]{transform:translate3d(-74px,10px,-20px) rotateZ(-7deg)}
+.o-pouch.n-2 .fan[data-i="1"]{transform:translate3d(74px,0,20px) rotateZ(5deg)}
+.o-pouch.n-2 .fan[data-i="2"]{transform:translate3d(0,10px,-40px) scale(.92);opacity:0;pointer-events:none}
+.o-pouch.n-3 .fan[data-i="0"]{transform:translate3d(-118px,18px,-30px) rotateZ(-10deg)}
+.o-pouch.n-3 .fan[data-i="2"]{transform:translate3d(118px,18px,-30px) rotateZ(10deg)}
+.o-count{position:absolute;top:22px;left:50%;transform:translateX(-50%);z-index:3;padding:7px 16px;border-radius:100px;background:rgba(18,16,13,.72);border:1px solid rgba(201,164,92,.45);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-l);white-space:nowrap;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+
+/* order section sized to fit one screen; #order lands with the card just under the nav */
+.order{padding:86px 0 clamp(80px,10vw,140px)}
+.o-vis{min-height:0}
+.o-info{padding:30px clamp(26px,3vw,48px) 26px}
+.o-info h2{font-size:clamp(32px,2.7vw,46px);margin:12px 0 0}
+.o-info .hi-sub{font-size:15px}
+.o-lbl{margin-top:16px}
+.packs{margin-top:9px}
+.pk{padding:12px 8px 11px}
+.pk b{font-size:22px}
+.pk strong{margin-top:6px;font-size:17px}
+.order .price{margin:12px 0 0}
+.order .price b{font-size:46px}
+.o-shades{margin-top:9px}
+.osw{padding:5px 12px 5px 5px;font-size:13.5px}
+.osw i{width:22px;height:22px}
+.order .o-list{margin:14px 0 16px;grid-template-columns:repeat(3,1fr);gap:8px 14px}
+.order .o-list li{font-size:13px;gap:8px}
+.order .o-list .ic{width:16px;height:16px}
+.o-msg{min-height:20px;margin-top:8px}
+.o-alt{display:flex;flex-wrap:wrap;gap:4px 12px}
+.o-alt span{display:inline;margin:0}
+details.allergy{margin-top:12px;padding:10px 14px}
+details.allergy summary{cursor:pointer;list-style:none;font-size:13px}
+details.allergy summary::-webkit-details-marker{display:none}
+details.allergy summary span{text-decoration:underline;text-underline-offset:3px;opacity:.75}
+details.allergy p{margin-top:8px;font-size:12.5px}
+@media (min-width:981px) and (max-height:820px){
+  .order{padding-top:78px}
+  .o-info{padding:18px 34px 14px}
+  .o-info .hi-sub{display:none}
+  .o-info h2{font-size:32px;margin-top:8px}
+  .o-lbl{margin-top:10px}
+  .pk{padding:9px 6px 8px}
+  .pk small{display:none}
+  .order .price{margin-top:8px}
+  .order .price b{font-size:34px}
+  .order .o-list{margin:8px 0 10px;gap:6px 12px}
+  details.allergy{margin-top:8px;padding:8px 12px}
+  .o-stage{--ok:.78}
+}
+@media (max-width:980px){.o-vis{min-height:380px}.o-stage{--ok:.6}.order .o-list{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.pk b{font-size:22px}.pk strong{font-size:16px}.pk small{font-size:10px}.o-qty{flex:0 0 100%;justify-content:space-between}.o-qty button{flex:1}.o-buy .btn{flex:1 1 0;padding-inline:12px}}
 @media (max-width:520px){.o-list{grid-template-columns:1fr}.price b{font-size:58px}}
 
@@ -771,12 +826,13 @@ body.loaded .hero-stage .scaler{opacity:1;transform:scale(var(--k,1))}
     <div class="o-card rv">
       <div class="o-vis" id="oVis">
         <div class="lattice"></div>
-        <div class="o-pouch" id="oPouch"></div>
-        <p class="hint">Tap the sachet to turn it over</p>
+        <div class="o-stage"><div class="o-pouch n-3" id="oPouch"></div></div>
+        <p class="o-count" id="oCount" hidden></p>
+        <p class="hint" id="oHint">Tap to turn the sachets over</p>
       </div>
       <div class="o-info">
         <p class="eyebrow"><span class="ln"></span><span id="oEyebrow">Choose your pack</span></p>
-        <h2>Your AyurKesha<br><em>ritual.</em></h2>
+        <h2>Your AyurKesha <em>ritual.</em></h2>
         <p class="hi-sub">प्राकृतिक और हर्बल रंग</p>
         <p class="o-lbl">Pack size</p>
         <div class="packs" id="oPacks" role="radiogroup" aria-label="Pack size"><p class="o-load">Loading packs…</p></div>
@@ -798,7 +854,7 @@ body.loaded .hero-stage .scaler{opacity:1;transform:scale(var(--k,1))}
         </div>
         <p class="o-msg" id="oMsg" aria-live="polite"></p>
         <p class="o-alt"><span id="oShip"></span>Prefer to chat? <a target="_blank" rel="noopener" id="oWa" href="https://wa.me/919619178792?text=Hello%20AyurKesha%2C%20I%27d%20like%20to%20order%20the%20herbal%20hair%20colour.">Order on WhatsApp</a></p>
-        <div class="allergy"><b>Allergy test 48 h before every use.</b> Even natural ingredients can cause allergies. Mix a little powder into a paste, apply inside your elbow and leave for 24 h. If redness or itching appears, do not use. Avoid eyes, eyebrows and lashes. External use only. Keep away from children.</div>
+        <details class="allergy"><summary><b>Allergy test 48 h before every use.</b> <span>Read safety note</span></summary><p>Even natural ingredients can cause allergies. Mix a little powder into a paste, apply inside your elbow and leave for 24 h. If redness or itching appears, do not use. Avoid eyes, eyebrows and lashes. External use only. Keep away from children.</p></details>
       </div>
     </div>
   </div>
@@ -977,7 +1033,7 @@ function pouchHTML(i){
 
 $('#heroRig').innerHTML=boxHTML(false);
 $('#ubRig').innerHTML=boxHTML(true);
-$('#oPouch').innerHTML=pouchHTML(9);
+$('#oPouch').innerHTML=[0,1,2].map(i=>`<div class="fan" data-i="${i}">${pouchHTML(9)}</div>`).join('');
 
 /* face shading */
 const L=(()=>{const v=[-.35,-.7,.62],m=Math.hypot(...v);return v.map(x=>x/m)})();
@@ -1268,8 +1324,13 @@ function render(){
   }
   $('#oQty').textContent=qty;
   addBtn.disabled=buyBtn.disabled=!sh;
-  const pouch=document.querySelector('#oPouch .p-shade');
-  if(pouch&&sh){pouch.querySelector('b').innerHTML=esc(sh.name).replace(' ','<br>');pouch.querySelector('i').style.background=sh.colorHex}
+  if(sh)document.querySelectorAll('#oPouch .p-shade').forEach(p=>{p.querySelector('b').innerHTML=esc(sh.name).replace(' ','<br>');p.querySelector('i').style.background=sh.colorHex});
+  if(pack){
+    const n=Math.min(3,Math.max(1,pack.size)),oP=$('#oPouch'),cnt=$('#oCount');
+    oP.classList.remove('n-1','n-2','n-3');oP.classList.add('n-'+n);
+    cnt.hidden=false;cnt.textContent=`${pack.size} ${pack.size===1?'sachet':'sachets'} · 40 g each`;
+    $('#oHint').textContent=n===1?'Tap the sachet to turn it over':'Tap to turn the sachets over';
+  }
   if(pack&&sh)$('#oWa').href='https://wa.me/919619178792?text='+encodeURIComponent(`Hello AyurKesha, I'd like to order ${qty} × the ${pack.size}-sachet pack (${sh.name}).`);
 }
 
