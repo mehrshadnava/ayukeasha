@@ -40,7 +40,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
       <div className="page-head">
         {placed && o.paymentStatus === "PAID" && <p className="notice ok" style={{ marginBottom: 24 }}>Thank you! Your order is confirmed. A confirmation has been sent to {o.email}. Bookmark this page to track your order.</p>}
         <p className="eyebrow">Order {o.number}</p>
-        <h1 className="h1">{ORDER_STATUS[o.status as OrderStatus] ?? o.status}</h1>
+        <h1 className="h1 od-title">{ORDER_STATUS[o.status as OrderStatus] ?? o.status}</h1>
         <div className="row">
           <Badge map={PAYMENT_STATUS} value={o.paymentStatus} />
           <span className="muted small">Placed {dateTime(o.createdAt)}</span>
@@ -54,7 +54,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
         </p>
       )}
 
-      <div className="grid-2">
+      <div className="od">
         <div className="stack">
           <div className="card">
             <Progress status={o.status} />
@@ -96,33 +96,35 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
               </ActionForm>
             </div>
           )}
+
+          <div className="grid-2e">
+            <div className="card">
+              <h2 className="h3">Delivering to</h2>
+              <Address o={o} />
+            </div>
+            <div className="card">
+              <h2 className="h3">Need help?</h2>
+              {o.tickets.map((tk) => <p key={tk.id} className="small"><Link className="link" href={`/support/${tk.number}?t=${tk.accessToken}`}>Ticket {tk.number}</Link> · {tk.subject}</p>)}
+              <p className="small muted">Questions about this order? We usually reply within a working day.</p>
+              <Link className="btn btn-ghost btn-sm mt-s" href={`/support?order=${o.number}`}>Contact support</Link>
+              {canCancel && (
+                <details className="od-cancel">
+                  <summary>Cancel this order</summary>
+                  <ActionForm action={cancelOrder} submit="Cancel order" variant="danger" small confirm="Cancel this order? Your payment will be refunded in full.">
+                    <input type="hidden" name="order" value={o.number} /><input type="hidden" name="t" value={t ?? ""} />
+                    <label className="field"><span>Reason (optional)</span><input className="input" name="reason" maxLength={300} /></label>
+                  </ActionForm>
+                </details>
+              )}
+            </div>
+          </div>
         </div>
 
-        <div className="stack">
-          <div className="card">
-            <h2 className="h2">Summary</h2>
-            <Items order={o} items={o.items} />
-            {paid && <Link className="btn btn-ghost btn-sm mt" href={`/invoice/${o.number}${q}`} target="_blank">Download invoice</Link>}
-          </div>
-          <div className="card">
-            <h2 className="h2">Delivering to</h2>
-            <Address o={o} />
-          </div>
-          <div className="card">
-            <h2 className="h2">Need help?</h2>
-            {o.tickets.map((tk) => <p key={tk.id} className="small"><Link className="link" href={`/support/${tk.number}?t=${tk.accessToken}`}>Ticket {tk.number}</Link> · {tk.subject}</p>)}
-            <Link className="btn btn-ghost btn-sm mt-s" href={`/support?order=${o.number}`}>Contact support</Link>
-            {canCancel && (
-              <>
-                <div className="divider" />
-                <ActionForm action={cancelOrder} submit="Cancel order" variant="danger" small confirm="Cancel this order? Your payment will be refunded in full.">
-                  <input type="hidden" name="order" value={o.number} /><input type="hidden" name="t" value={t ?? ""} />
-                  <label className="field"><span>Reason (optional)</span><input className="input" name="reason" maxLength={300} /></label>
-                </ActionForm>
-              </>
-            )}
-          </div>
-        </div>
+        <aside className="card od-sum">
+          <h2 className="h2">Summary</h2>
+          <Items order={o} items={o.items} />
+          {paid && <Link className="btn btn-ghost btn-sm btn-block mt" href={`/invoice/${o.number}${q}`} target="_blank">Download invoice</Link>}
+        </aside>
       </div>
     </div>
   );

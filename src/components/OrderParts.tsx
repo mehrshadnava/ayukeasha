@@ -31,13 +31,17 @@ export function Timeline({ events, showInternal = false }: { events: OrderEvent[
 export function Items({ order, items }: { order: Order; items: OrderItem[] }) {
   return (
     <>
-      {items.map((i) => (
-        <div className="row between" key={i.id} style={{ padding: "8px 0" }}>
-          <span>{i.quantity} × {i.productName} <span className="muted">· {i.variantName}</span></span>
-          <span>{money(i.unitPrice * i.quantity)}</span>
-        </div>
-      ))}
-      <div className="divider" />
+      <ul className="oi-list">
+        {items.map((i) => (
+          <li className="oi" key={i.id}>
+            <div>
+              <b>{i.productName.replace(/^AyurKesha\s+/, "")}</b>
+              <span>{i.variantName} · {i.quantity} × {money(i.unitPrice)}</span>
+            </div>
+            <strong>{money(i.unitPrice * i.quantity)}</strong>
+          </li>
+        ))}
+      </ul>
       <div className="sum">
         <div><span>Subtotal</span><span>{money(order.subtotal)}</span></div>
         <div><span>Shipping</span><span>{order.shippingFee ? money(order.shippingFee) : "Free"}</span></div>
