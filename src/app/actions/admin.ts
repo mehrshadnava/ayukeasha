@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { config } from "@/lib/config";
 import { requireAdmin } from "@/lib/auth";
 import { sendMail } from "@/lib/mail";
-import { addEvent, applyCourierStatus, cancel, orderUrl, packageFor, refund, setStatus, ship } from "@/lib/orders";
+import { addEvent, applyCourierStatus, cancel, orderUrl, packageFor, refund, setStatus, ship, shipManually } from "@/lib/orders";
 import { createReturnShipment, shippingMode, trackAwb } from "@/lib/shiprocket";
 import { ORDER_STATUS, TICKET_STATUS, type OrderStatus, type TicketStatus } from "@/lib/status";
 import type { FormState } from "./auth";
@@ -31,6 +31,14 @@ export async function shipOrder(_: FormState, fd: FormData) {
   return guarded(async () => {
     const r = await ship(id);
     return { ok: `Shipment created. AWB ${r.awbCode}.${r.warnings.length ? " " + r.warnings.join(" ") : ""}` };
+  }, orderPaths(id));
+}
+
+export async function markShipped(_: FormState, fd: FormData) {
+  const id = s(fd, "orderId");
+  return guarded(async () => {
+    await shipManually(id, s(fd, "courier"), s(fd, "awb"), s(fd, "trackingUrl"));
+    return { ok: "Marked as shipped. The customer has been emailed the tracking details." };
   }, orderPaths(id));
 }
 
@@ -94,6 +102,12 @@ export async function returnDecision(_: FormState, fd: FormData) {
 
     if (decision === "approve") {
       if (rr.status !== "REQUESTED") throw new Error("Already decided");
+      if (shippingMode() === "off") {
+        await db.returnRequest.update({ where: { id: rr.id }, data: { status: "APPROVED", adminNote: note } });
+        await addEvent(id, "Return approved. Our team will arrange the pickup.", { source: "ADMIN" });
+        await notify(`Return approved for ${o.number}`, ["Your return has been approved. Our team will contact you to arrange the pickup.", "Please keep the items packed. Your refund will be processed once the package reaches us.", note].filter(Boolean));
+        return { ok: "Return approved. Shiprocket isn't connected, so arrange the pickup yourself, then mark the package received." };
+      }
       const r = await createReturnShipment(o, packageFor(o));
       await db.returnRequest.update({ where: { id: rr.id }, data: { status: "APPROVED", adminNote: note, shiprocketOrderId: r.shiprocketOrderId, shiprocketShipmentId: r.shipmentId, awbCode: r.awbCode } });
       await addEvent(id, `Return approved. Reverse pickup scheduled${r.awbCode ? ` (AWB ${r.awbCode})` : ""}.`, { source: "ADMIN" });

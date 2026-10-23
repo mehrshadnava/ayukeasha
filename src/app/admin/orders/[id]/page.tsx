@@ -8,7 +8,7 @@ import { ORDER_STATUS, PAYMENT_STATUS, RETURN_STATUS, TICKET_STATUS_ADMIN } from
 import { Badge } from "@/components/ui";
 import { Address, Items, Timeline } from "@/components/OrderParts";
 import ActionForm from "@/components/ActionForm";
-import { addNote, refundOrder, returnDecision, shipOrder, simulateCourier, syncTracking, updateStatus } from "@/app/actions/admin";
+import { addNote, markShipped, refundOrder, returnDecision, shipOrder, simulateCourier, syncTracking, updateStatus } from "@/app/actions/admin";
 
 export default async function AdminOrder({ params }: { params: Promise<{ id: string }> }) {
   const o = await db.order.findUnique({
@@ -21,6 +21,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ id: str
   const canShip = paid && ["CONFIRMED", "PROCESSING", "READY_TO_SHIP"].includes(o.status) && !o.awbCode;
   const inTransit = ["READY_TO_SHIP", "SHIPPED", "OUT_FOR_DELIVERY"].includes(o.status);
   const testShip = shippingMode() === "test";
+  const srOff = shippingMode() === "off";
   const rr = o.returnRequest;
   const hid = <input type="hidden" name="orderId" value={o.id} />;
 
@@ -92,15 +93,29 @@ export default async function AdminOrder({ params }: { params: Promise<{ id: str
               </dl>
             ) : <p className="muted small">Not shipped yet.</p>}
 
-            <div className="row mt" style={{ alignItems: "flex-start" }}>
-              {canShip && (
-                <ActionForm action={shipOrder} submit={testShip ? "Create test shipment" : "Ship with Shiprocket"} className="row">{hid}</ActionForm>
-              )}
-              {o.awbCode && inTransit && !testShip && (
-                <ActionForm action={syncTracking} submit="Refresh tracking" variant="ghost" className="row">{hid}</ActionForm>
-              )}
-            </div>
-            {canShip && <p className="hint mt-s">Creates the order in Shiprocket, assigns the recommended courier, requests pickup from your warehouse and generates the label.</p>}
+            {canShip && srOff ? (
+              <div className="mt">
+                <p className="small muted">Shiprocket isn't connected yet. Book the courier yourself, then record it here — the customer gets an email with the tracking details.</p>
+                <ActionForm action={markShipped} submit="Mark as shipped" className="fields mt-s">
+                  {hid}
+                  <label className="field"><span>Courier</span><input className="input" name="courier" placeholder="e.g. Delhivery, India Post" required /></label>
+                  <label className="field"><span>Tracking number</span><input className="input" name="awb" required /></label>
+                  <label className="field full"><span>Tracking link (optional)</span><input className="input" name="trackingUrl" type="url" placeholder="https://" /></label>
+                </ActionForm>
+              </div>
+            ) : (
+              <>
+                <div className="row mt" style={{ alignItems: "flex-start" }}>
+                  {canShip && (
+                    <ActionForm action={shipOrder} submit={testShip ? "Create test shipment" : "Ship with Shiprocket"} className="row">{hid}</ActionForm>
+                  )}
+                  {o.awbCode && inTransit && shippingMode() === "live" && (
+                    <ActionForm action={syncTracking} submit="Refresh tracking" variant="ghost" className="row">{hid}</ActionForm>
+                  )}
+                </div>
+                {canShip && <p className="hint mt-s">Creates the order in Shiprocket, assigns the recommended courier, requests pickup from your warehouse and generates the label.</p>}
+              </>
+            )}
 
             {testShip && o.awbCode && inTransit && (
               <div className="notice mt">

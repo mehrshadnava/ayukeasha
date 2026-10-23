@@ -4,7 +4,7 @@ import { config } from "./config";
 import { money } from "./format";
 import { sendMail } from "./mail";
 import { refundPayment } from "./razorpay";
-import { createShipment, cancelShipment, mapCourierStatus } from "./shiprocket";
+import { createShipment, cancelShipment, mapCourierStatus, shippingMode } from "./shiprocket";
 import { safeEqual } from "./ids";
 import { CANCELLABLE, FULFILMENT_STEPS, ORDER_STATUS, type OrderStatus } from "./status";
 import type { Order, OrderItem, Product } from "@prisma/client";
@@ -58,13 +58,13 @@ const rank = (s: string) => FULFILMENT_STEPS.indexOf(s as OrderStatus);
 
 const customerNotes: Partial<Record<OrderStatus, (o: Order) => [string, string[]]>> = {
   SHIPPED: (o) => [`Your order ${o.number} is on its way`, [
-    `Your AyurKesha ritual box has left our warehouse${o.courierName ? ` with ${o.courierName}` : ""}.`,
+    `Your AyurKesha order has left our warehouse${o.courierName ? ` with ${o.courierName}` : ""}.`,
     o.awbCode ? `Tracking number (AWB): ${o.awbCode}.` : "",
     `Remember: do an allergy patch test 48 hours before your first application.`,
   ].filter(Boolean)],
   OUT_FOR_DELIVERY: (o) => [`Order ${o.number} is out for delivery`, [`Your package will reach you today. Please keep your phone handy for the delivery partner.`]],
   DELIVERED: (o) => [`Order ${o.number} delivered`, [
-    `Your ritual box has been delivered. We hope you love the results!`,
+    `Your AyurKesha order has been delivered. We hope you love the results!`,
     `If anything is wrong with your order, you can request a return within ${config.returnWindowDays} days from your order page.`,
   ]],
   RTO: (o) => [`Delivery of order ${o.number} was unsuccessful`, [`The courier could not deliver your package and it is being returned to us. Our team will contact you shortly.`]],
@@ -155,6 +155,7 @@ export function packageFor(o: Order & { items: (OrderItem & { variant: { product
 export async function ship(orderId: string) {
   const o = await db.order.findUniqueOrThrow({ where: { id: orderId }, include: { items: { include: { variant: { include: { product: true } } } } } });
   if (!["CONFIRMED", "PROCESSING", "READY_TO_SHIP"].includes(o.status)) throw new Error(`Orders in status "${ORDER_STATUS[o.status as OrderStatus]}" cannot be shipped.`);
+  if (shippingMode() === "off") throw new Error("Shiprocket isn't connected yet. Use “Mark as shipped” with your courier's tracking number instead.");
   const res = await createShipment(o, packageFor(o), { shiprocketOrderId: o.shiprocketOrderId, shipmentId: o.shiprocketShipmentId, awbCode: o.awbCode });
   await db.order.update({
     where: { id: orderId },
@@ -166,4 +167,14 @@ export async function ship(orderId: string) {
   await setStatus(orderId, "READY_TO_SHIP", { message: `Shipment created${res.courierName ? ` with ${res.courierName}` : ""}. AWB ${res.awbCode}. Pickup requested.`, source: "ADMIN" });
   for (const w of res.warnings) await addEvent(orderId, w, { internal: true });
   return res;
+}
+
+/** Fulfilment without Shiprocket: record the courier and tracking number by hand and notify the customer. */
+export async function shipManually(orderId: string, courier: string, awb: string, trackingUrl: string) {
+  const o = await db.order.findUniqueOrThrow({ where: { id: orderId } });
+  if (!["CONFIRMED", "PROCESSING", "READY_TO_SHIP"].includes(o.status)) throw new Error(`Orders in status "${ORDER_STATUS[o.status as OrderStatus]}" cannot be shipped.`);
+  if (!courier || !awb) throw new Error("Enter the courier name and tracking number.");
+  if (trackingUrl && !/^https?:\/\//i.test(trackingUrl)) throw new Error("The tracking link must start with http:// or https://");
+  await db.order.update({ where: { id: orderId }, data: { courierName: courier, awbCode: awb, trackingUrl: trackingUrl || null } });
+  await setStatus(orderId, "SHIPPED", { message: `Shipped with ${courier}. Tracking number ${awb}.`, source: "ADMIN", force: true });
 }

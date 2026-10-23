@@ -45,7 +45,8 @@ export function shippingMode(): "live" | "test" | "off" {
 export type Serviceability = { serviceable: boolean; etaDays?: number; etd?: string; courier?: string };
 
 export async function checkServiceability(pincode: string, weightKg: number): Promise<Serviceability> {
-  if (!shiprocketLive()) return { serviceable: true, etaDays: 5, courier: "Test courier" };
+  // Without Shiprocket there is no real courier data, so don't invent a delivery estimate.
+  if (!shiprocketLive()) return { serviceable: true };
   const q = new URLSearchParams({
     pickup_postcode: config.seller.pincode,
     delivery_postcode: pincode,
