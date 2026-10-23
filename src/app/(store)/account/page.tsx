@@ -30,7 +30,7 @@ export default async function Account() {
         <div className="card">
           <h2 className="h2">Orders</h2>
           {orders.length === 0 ? (
-            <p className="muted">No orders yet. <Link className="link" href="/product/ritual-box">Shop the ritual box</Link>.</p>
+            <p className="muted">No orders yet. <a className="link" href="/#order">Shop hair colour</a>.</p>
           ) : (
             orders.map((o) => (
               <Link key={o.id} href={`/orders/${o.number}`} className="line" style={{ gridTemplateColumns: "1fr auto" }}>

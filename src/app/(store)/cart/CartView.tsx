@@ -10,7 +10,7 @@ export default function CartView({ shippingFee, freeAbove }: { shippingFee: numb
     return (
       <div className="card">
         <p>Your cart is empty.</p>
-        <Link href="/product/ritual-box" className="btn btn-gold mt">Shop the ritual box</Link>
+        <a href="/#order" className="btn btn-gold mt">Shop hair colour</a>
       </div>
     );
   const shipping = subtotal >= freeAbove ? 0 : shippingFee;
@@ -21,7 +21,7 @@ export default function CartView({ shippingFee, freeAbove }: { shippingFee: numb
           <div className="line" key={l.variantId}>
             <div className="thumb"><i style={{ background: l.colorHex }} /></div>
             <div>
-              <Link href={`/product/${l.slug}`} className="h3">{l.name}</Link>
+              <span className="h3">{l.name}</span>
               <p className="small muted">{l.variantName} · {money(l.price)} each</p>
               <div className="row mt-s">
                 <div className="qty">
@@ -45,6 +45,7 @@ export default function CartView({ shippingFee, freeAbove }: { shippingFee: numb
         </div>
         {shipping > 0 && <p className="hint mt-s">Add {money(freeAbove - subtotal)} more for free shipping.</p>}
         <Link href="/checkout" className="btn btn-gold btn-block mt">Checkout</Link>
+        <a href="/#order" className="btn btn-ghost btn-block mt-s">Continue shopping</a>
         <p className="hint mt-s">Prices include GST. Secure payment via Razorpay.</p>
       </div>
     </div>

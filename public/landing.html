@@ -73,6 +73,16 @@ body.loaded .loader{transform:translateY(-101%)}
 .nav-links a:hover{opacity:1}
 .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
 @media (max-width:900px){.nav-links{display:none}}
+.nav-act{display:flex;align-items:center;gap:10px}
+.nav-ic{position:relative;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(232,207,150,.28);background:rgba(18,16,13,.35);color:var(--gold-l);cursor:pointer;transition:border-color .3s,background .3s}
+.nav-ic:hover,.nav-ic[aria-expanded=true]{border-color:var(--gold-l);background:rgba(201,164,92,.12)}
+.nav-ic svg{width:19px;height:19px}
+.nav-count{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--gold);color:var(--ink);font:600 10px/18px var(--sans);text-align:center}
+.more{position:relative}
+.more-menu{position:absolute;right:0;top:calc(100% + 10px);min-width:190px;padding:8px;border-radius:14px;background:rgba(29,26,21,.97);border:1px solid rgba(201,164,92,.3);box-shadow:0 20px 50px -10px rgba(0,0,0,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.more-menu a{display:block;padding:11px 14px;border-radius:9px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);opacity:.85}
+.more-menu a:hover,.more-menu a:focus-visible{background:rgba(201,164,92,.12);opacity:1;outline:none}
+@media (max-width:520px){.nav-act{gap:6px}.nav-ic{width:36px;height:36px}.nav-ic svg{width:17px;height:17px}}
 
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;gap:12px;padding:17px 30px;border-radius:100px;font:500 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;position:relative;overflow:hidden;isolation:isolate;transition:color .4s,border-color .4s,transform .3s var(--ease)}
@@ -528,6 +538,40 @@ body.loaded .hero-stage .scaler{opacity:1;transform:scale(var(--k,1))}
 .allergy{margin-top:34px;padding:18px 20px;border:1px solid rgba(163,67,31,.6);border-radius:12px;font-size:13px;line-height:1.6;color:rgba(245,237,224,.7);background:rgba(163,67,31,.07)}
 .allergy b{color:#e0805a;font-weight:500}
 @media (max-width:980px){.o-card{grid-template-columns:1fr}.o-vis{min-height:520px}}
+.o-lbl{margin-top:26px;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.o-lbl b{color:var(--gold-l);font-weight:500;letter-spacing:.14em}
+.packs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.pk{position:relative;padding:16px 10px 14px;border-radius:14px;border:1px solid rgba(201,164,92,.3);background:rgba(18,16,13,.4);color:var(--cream);text-align:center;cursor:pointer;font:inherit;transition:border-color .3s,background .3s,transform .3s var(--ease)}
+.pk:hover{border-color:rgba(232,207,150,.7)}
+.pk[aria-checked=true]{border-color:var(--gold);background:linear-gradient(160deg,rgba(201,164,92,.2),rgba(91,100,39,.18))}
+.pk b{display:block;font:400 26px/1 var(--serif);color:var(--gold-l)}
+.pk span{display:block;margin-top:3px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.75}
+.pk strong{display:block;margin-top:10px;font:500 18px/1 var(--sans);color:var(--cream)}
+.pk small{display:block;margin-top:4px;font-size:11px;opacity:.55}
+.pk em{position:absolute;top:-9px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:10px;background:var(--rust);color:var(--cream);font:500 9px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;font-style:normal;white-space:nowrap}
+.pk:disabled{opacity:.4;cursor:not-allowed}
+.order .price{margin-top:24px}
+.o-shades{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.osw{display:flex;align-items:center;gap:9px;padding:7px 14px 7px 7px;border-radius:100px;border:1px solid rgba(201,164,92,.3);background:none;color:var(--cream);font:inherit;font-size:14px;cursor:pointer;transition:border-color .3s,background .3s}
+.osw i{width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(232,207,150,.4)}
+.osw[aria-checked=true]{border-color:var(--gold);background:rgba(201,164,92,.12)}
+.osw:disabled{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+.order .o-list{margin:24px 0 26px}
+.o-buy{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.o-buy .btn[disabled]{opacity:.45;cursor:not-allowed}
+.o-qty{display:inline-flex;align-items:center;border:1px solid rgba(201,164,92,.4);border-radius:100px;overflow:hidden}
+.o-qty button{width:42px;height:48px;background:none;border:0;color:var(--gold-l);font-size:19px;cursor:pointer}
+.o-qty button:hover{background:rgba(201,164,92,.12)}
+.o-qty span{min-width:28px;text-align:center;font-variant-numeric:tabular-nums}
+.o-msg{min-height:22px;margin-top:12px;font-size:14px;color:var(--gold-l)}
+.o-msg a{text-decoration:underline;text-underline-offset:3px}
+.o-msg.err{color:#e0805a}
+.o-alt{font-size:13px;color:rgba(245,237,224,.6)}
+.o-alt a{color:var(--gold-l);text-decoration:underline;text-underline-offset:3px}
+.o-alt span{display:block;margin-bottom:4px}
+.o-load{grid-column:1/-1;font-size:14px;opacity:.6}
+.o-buy .btn{white-space:nowrap;justify-content:center}
+@media (max-width:520px){.pk b{font-size:22px}.pk strong{font-size:16px}.pk small{font-size:10px}.o-qty{flex:0 0 100%;justify-content:space-between}.o-qty button{flex:1}.o-buy .btn{flex:1 1 0;padding-inline:12px}}
 @media (max-width:520px){.o-list{grid-template-columns:1fr}.price b{font-size:58px}}
 
 /* ---------- love ---------- */
@@ -576,8 +620,19 @@ body.loaded .hero-stage .scaler{opacity:1;transform:scale(var(--k,1))}
 <header class="nav" id="nav">
   <div class="wrap">
     <a href="#top" class="brand" aria-label="AyurKesha home"><span data-mandala></span><span><b>AyurKesha</b><small>आयुरकेशा</small></span></a>
-    <nav class="nav-links"><a href="#philosophy">Story</a><a href="#unbox">The Box</a><a href="#botanicals">Botanicals</a><a href="#ritual">Ritual</a><a href="#shades">Shades</a><a href="/track">Track order</a><a href="/account">Account</a></nav>
-    <a href="/product/ritual-box" class="btn btn-gold mag">Order · ₹249</a>
+    <nav class="nav-links"><a href="#philosophy">Story</a><a href="#unbox">The Box</a><a href="#botanicals">Botanicals</a><a href="#ritual">Ritual</a><a href="#shades">Shades</a></nav>
+    <div class="nav-act">
+      <a href="#order" class="btn btn-gold mag">Order now</a>
+      <a href="/cart" class="nav-ic" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14l-1.2 11.2a2 2 0 01-2 1.8H8.2a2 2 0 01-2-1.8z"/><path d="M9 7V6a3 3 0 016 0v1"/></svg><span class="nav-count" id="navCount" hidden>0</span></a>
+      <div class="more" id="more">
+        <button type="button" class="nav-ic" aria-haspopup="menu" aria-expanded="false" aria-label="More options"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg></button>
+        <div class="more-menu" role="menu" hidden>
+          <a role="menuitem" href="/track">Track order</a>
+          <a role="menuitem" href="/account">Account</a>
+          <a role="menuitem" href="/support">Help</a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -720,22 +775,29 @@ body.loaded .hero-stage .scaler{opacity:1;transform:scale(var(--k,1))}
         <p class="hint">Tap the sachet to turn it over</p>
       </div>
       <div class="o-info">
-        <p class="eyebrow"><span class="ln"></span>Pack of 3 · Natural Black</p>
-        <h2>The AyurKesha<br><em>ritual box.</em></h2>
+        <p class="eyebrow"><span class="ln"></span><span id="oEyebrow">Choose your pack</span></p>
+        <h2>Your AyurKesha<br><em>ritual.</em></h2>
         <p class="hi-sub">प्राकृतिक और हर्बल रंग</p>
-        <div class="price"><b>₹249</b><span>MRP · incl. of all taxes</span></div>
+        <p class="o-lbl">Pack size</p>
+        <div class="packs" id="oPacks" role="radiogroup" aria-label="Pack size"><p class="o-load">Loading packs…</p></div>
+        <div class="price"><b id="oPrice">—</b><span>MRP · incl. of all taxes</span></div>
+        <p class="o-lbl">Shade · <b id="oShadeName"></b></p>
+        <div class="o-shades" id="oShades" role="radiogroup" aria-label="Shade"></div>
         <ul class="o-list">
-          <li data-ic="leaf">3 × 40 g herbal sachets</li>
-          <li data-ic="hand">3 pairs of gloves</li>
-          <li data-ic="comb">1 application comb</li>
-          <li data-ic="cap">1 shower cap &amp; tissue</li>
+          <li data-ic="leaf"><span id="oSachets">Herbal sachets, 40 g each</span></li>
+          <li data-ic="hand"><span id="oGloves">Gloves for every application</span></li>
+          <li data-ic="comb">Application comb</li>
+          <li data-ic="cap">Shower cap &amp; tissue</li>
           <li data-ic="clock">Ready in 45 minutes</li>
           <li data-ic="shield">For grey hair · self apply</li>
         </ul>
-        <div class="ctas">
-          <a class="btn btn-gold mag" href="/product/ritual-box">Buy now <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn-ghost mag" target="_blank" rel="noopener" href="https://wa.me/919619178792?text=Hello%20AyurKesha%2C%20I%27d%20like%20to%20order%20the%20herbal%20hair%20colour%20pack%20of%203.">Order on WhatsApp</a>
+        <div class="o-buy">
+          <div class="o-qty" aria-label="Quantity"><button type="button" data-q="-1" aria-label="Decrease">−</button><span id="oQty">1</span><button type="button" data-q="1" aria-label="Increase">+</button></div>
+          <button type="button" class="btn btn-ghost" id="oAdd" disabled>Add to cart</button>
+          <button type="button" class="btn btn-gold" id="oBuy" disabled>Buy now <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </div>
+        <p class="o-msg" id="oMsg" aria-live="polite"></p>
+        <p class="o-alt"><span id="oShip"></span>Prefer to chat? <a target="_blank" rel="noopener" id="oWa" href="https://wa.me/919619178792?text=Hello%20AyurKesha%2C%20I%27d%20like%20to%20order%20the%20herbal%20hair%20colour.">Order on WhatsApp</a></p>
         <div class="allergy"><b>Allergy test 48 h before every use.</b> Even natural ingredients can cause allergies. Mix a little powder into a paste, apply inside your elbow and leave for 24 h. If redness or itching appears, do not use. Avoid eyes, eyebrows and lashes. External use only. Keep away from children.</div>
       </div>
     </div>
@@ -768,7 +830,7 @@ body.loaded .hero-stage .scaler{opacity:1;transform:scale(var(--k,1))}
     <div class="f-word">AyurKesha</div>
     <p class="f-hi">From leaves, not from labs.</p>
     <div class="f-grid">
-      <div><h6>Explore</h6><p><a href="#philosophy">Our story</a><br><a href="#botanicals">Botanicals</a><br><a href="#ritual">How to use</a><br><a href="/product/ritual-box">Shop</a></p></div>
+      <div><h6>Explore</h6><p><a href="#philosophy">Our story</a><br><a href="#botanicals">Botanicals</a><br><a href="#ritual">How to use</a><br><a href="#order">Shop</a></p></div>
       <div><h6>Customer care</h6><p><a href="/track">Track your order</a><br><a href="/support">Help &amp; support</a><br><a href="/policies/returns">Returns &amp; refunds</a><br><a href="/policies/shipping">Shipping</a><br><a href="tel:+919619178792">96191 78792</a><br><a href="mailto:customercare@ayurkesha.com">customercare@ayurkesha.com</a></p></div>
       <div><h6>Manufactured by</h6><p>Cosmo International, Bhatinda<br>Mfg. Lic. No.: 94-COS-PB</p></div>
       <div><h6>Marketed by</h6><p>Aditya Enterprises, Sector-12, Kharghar, Navi Mumbai – 410210</p></div>
@@ -860,7 +922,7 @@ function boxHTML(withPouches){
       <p class="sm"><b>Contains:</b> 3 sachets · 3 gloves · 1 comb · Tissue · 1 shower cap<br><b>Shade:</b> natural black · For grey hair</p>
       <p class="sm"><b>Available in 4 shades:</b><span class="dots">${SHADES.map(s=>`<i style="background:${s[1]}"></i>`).join('')}</span></p>
       <div class="allergy-s"><b>Allergy test 48 h before every use.</b> Even natural ingredients can cause allergies. Apply a little paste inside your elbow and leave for 24 h. If redness or itching appears, do not use. External use only. Keep away from children.</div>
-      <div class="bk-foot"><p><b>Mfd. by:</b> Cosmo International, Bhatinda<br><b>Mktd. by:</b> Aditya Enterprises, Navi Mumbai<br><b>MRP:</b> ₹249 (incl. of all taxes)<br><b>Care:</b> 9619178792 · www.ayurkesha.com<br>Country of origin: India</p>${barcode()}</div>
+      <div class="bk-foot"><p><b>Mfd. by:</b> Cosmo International, Bhatinda<br><b>Mktd. by:</b> Aditya Enterprises, Navi Mumbai<br><b>MRP:</b> ₹350 (incl. of all taxes)<br><b>Care:</b> 9619178792 · www.ayurkesha.com<br>Country of origin: India</p>${barcode()}</div>
     </div>${SH}</div>`;
   const left=`<div class="fc f-left lattice">
     <div class="sd-arch"><b>AyurKesha</b><span>आयुरकेशा</span></div>
@@ -1161,6 +1223,82 @@ const t0=performance.now();
 const done=()=>{setTimeout(()=>document.body.classList.add('loaded'),Math.max(0,1700-(performance.now()-t0)))};
 (document.fonts?document.fonts.ready:Promise.resolve()).then(done);
 setTimeout(()=>document.body.classList.add('loaded'),4000);
+})();
+</script>
+<script>
+/* ---------------- shop: packs, shades, cart, ⋮ menu (cart format shared with the Next.js app: localStorage ak_cart_v1) ---------------- */
+(()=>{
+const $=s=>document.querySelector(s);
+const KEY='ak_cart_v1', MAX=10;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+const inr=p=>'₹'+(p/100).toLocaleString('en-IN',{maximumFractionDigits:2});
+const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return[]}};
+const write=ls=>{try{localStorage.setItem(KEY,JSON.stringify(ls))}catch{}};
+
+const countEl=$('#navCount');
+const showCount=()=>{const n=read().reduce((a,l)=>a+(l.qty||0),0);countEl.textContent=n;countEl.hidden=!n};
+showCount();addEventListener('storage',showCount);addEventListener('pageshow',showCount);
+
+const more=$('#more'),moreBtn=more.querySelector('button'),moreMenu=more.querySelector('.more-menu');
+const setMore=o=>{moreMenu.hidden=!o;moreBtn.setAttribute('aria-expanded',String(o))};
+moreBtn.addEventListener('click',e=>{e.stopPropagation();setMore(moreMenu.hidden)});
+document.addEventListener('click',e=>{if(!more.contains(e.target))setMore(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setMore(false)});
+
+const packsEl=$('#oPacks'),shadesEl=$('#oShades'),addBtn=$('#oAdd'),buyBtn=$('#oBuy'),msg=$('#oMsg');
+let packs=[],pack=null,shadeName='Natural Black',qty=1;
+const shadeOf=p=>p.shades.find(s=>s.name===shadeName&&s.inStock)||p.shades.find(s=>s.inStock)||null;
+
+function render(){
+  const best=Math.min(...packs.map(p=>p.price/p.size));
+  packsEl.innerHTML=packs.map(p=>{
+    const any=p.shades.some(s=>s.inStock);
+    return `<button type="button" class="pk" role="radio" aria-checked="${p===pack}" data-slug="${esc(p.slug)}" ${any?'':'disabled'}>
+      ${p.price/p.size===best&&packs.length>1?'<em>Best value</em>':''}<b>${p.size}</b><span>${p.size===1?'Sachet':'Sachets'}</span>
+      <strong>${inr(p.price)}</strong><small>${any?inr(Math.round(p.price/p.size/100)*100)+' per use':'Sold out'}</small></button>`}).join('');
+  const sh=pack&&shadeOf(pack);
+  if(sh)shadeName=sh.name;
+  shadesEl.innerHTML=pack?pack.shades.map(s=>`<button type="button" class="osw" role="radio" aria-checked="${sh&&s.id===sh.id}" data-name="${esc(s.name)}" ${s.inStock?'':'disabled title="Sold out"'}><i style="background:${esc(s.colorHex)}"></i>${esc(s.name)}</button>`).join(''):'';
+  $('#oShadeName').textContent=sh?sh.name:'';
+  $('#oPrice').textContent=pack?inr(pack.price):'—';
+  $('#oEyebrow').textContent=pack?`Pack of ${pack.size}${sh?' · '+sh.name:''}`:'Choose your pack';
+  if(pack){
+    $('#oSachets').textContent=`${pack.size} × 40 g herbal ${pack.size===1?'sachet':'sachets'}`;
+    $('#oGloves').textContent=`${pack.size} ${pack.size===1?'pair':'pairs'} of gloves`;
+  }
+  $('#oQty').textContent=qty;
+  addBtn.disabled=buyBtn.disabled=!sh;
+  const pouch=document.querySelector('#oPouch .p-shade');
+  if(pouch&&sh){pouch.querySelector('b').innerHTML=esc(sh.name).replace(' ','<br>');pouch.querySelector('i').style.background=sh.colorHex}
+  if(pack&&sh)$('#oWa').href='https://wa.me/919619178792?text='+encodeURIComponent(`Hello AyurKesha, I'd like to order ${qty} × the ${pack.size}-sachet pack (${sh.name}).`);
+}
+
+packsEl.addEventListener('click',e=>{const b=e.target.closest('.pk');if(!b||b.disabled)return;pack=packs.find(p=>p.slug===b.dataset.slug);msg.textContent='';render()});
+shadesEl.addEventListener('click',e=>{const b=e.target.closest('.osw');if(!b||b.disabled)return;shadeName=b.dataset.name;msg.textContent='';render()});
+document.querySelector('.o-qty').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;qty=Math.min(MAX,Math.max(1,qty+ +b.dataset.q));render()});
+const swatches=$('#swatches');
+if(swatches)swatches.addEventListener('click',e=>{const b=e.target.closest('.sw');const n=b&&b.querySelector('b');if(!n)return;shadeName=n.textContent.trim();if(packs.length)render()});
+
+function addToCart(){
+  const sh=shadeOf(pack);if(!sh)return false;
+  const ls=read(),ex=ls.find(l=>l.variantId===sh.id);
+  if(ex)ex.qty=Math.min(MAX,ex.qty+qty);
+  else ls.push({variantId:sh.id,qty,name:pack.name,variantName:sh.name,price:pack.price,colorHex:sh.colorHex,slug:pack.slug});
+  write(ls);showCount();return true;
+}
+addBtn.addEventListener('click',()=>{if(!addToCart())return;msg.className='o-msg';msg.innerHTML=`Added to your cart. <a href="/cart">View cart</a>`});
+buyBtn.addEventListener('click',()=>{if(addToCart())location.href='/checkout'});
+
+fetch('/api/catalog').then(r=>{if(!r.ok)throw 0;return r.json()}).then(c=>{
+  packs=c.packs.filter(p=>p.shades.length);
+  if(!packs.length)throw 0;
+  pack=[...packs].reverse().find(p=>p.shades.some(s=>s.inStock))||packs[0];
+  if(c.freeShippingAbove)$('#oShip').textContent=`Free shipping on orders above ${inr(c.freeShippingAbove)}.`;
+  render();
+}).catch(()=>{
+  packsEl.innerHTML='<p class="o-load">Prices could not be loaded right now.</p>';
+  msg.className='o-msg err';msg.textContent='Please refresh the page, or order on WhatsApp below.';
+});
 })();
 </script>
 </body>

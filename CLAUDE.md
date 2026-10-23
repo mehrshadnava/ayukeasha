@@ -6,7 +6,7 @@ Read this before changing anything. `README.md` covers setup and the go-live che
 
 ## Business context
 
-- **Product:** "AyurKesha Ritual Box": 3 × 40 g herbal sachets, gloves, comb, shower cap. ₹249 MRP including GST. Four shades (variants): Natural Black, Dark Brown, Brown, Burgundy. Seeded by `prisma/seed.ts` (slug `ritual-box`, SKUs `AK-RB3-*`).
+- **Products (2026-10-24):** three packs of the herbal hair colour, each a Product with the same four shade Variants (Natural Black, Dark Brown, Brown, Burgundy) and its own stock: **1 sachet ₹150** (slug `pack-1`, SKUs `AK-P1-*`), **2 sachets ₹250** (`pack-2`, `AK-P2-*`), **3 sachets ₹350** (`ritual-box`, `AK-RB3-*`; the original Ritual Box, slug kept so old orders stay linked). `Product.packSize` = sachets per pack. Prices include GST. Seeded by `prisma/seed.ts` (idempotent; never overwrites admin-edited price/stock). Weight/box sizes of the 1- and 2-sachet packs are estimates.
 - **Seller:** marketed by Aditya Enterprises, Sector-12, Kharghar, Navi Mumbai, Maharashtra 410210; manufactured by Cosmo International, Bhatinda. Customer care 9619178792, customercare@ayurkesha.com. These details come from env vars (`SELLER_*`) and appear on invoices, emails, policies and Shiprocket return pickups.
 - **Market:** India only. Prices in INR, Indian 10-digit mobiles, 6-digit pincodes, Indian states list, GST invoices.
 - **Owner's decisions (2026-10-23):** Next.js full-stack, Razorpay only (no Cash on Delivery), Shiprocket for shipping, full scope from day one.
@@ -21,7 +21,7 @@ ayurkesha/
 └─ *.pdf, glitch.mp4    ← packaging artwork (pouch, box, comb cover, thank-you card)
 ```
 
-`site/index.html` was copied into `platform/public/landing.html` and edited there (order buttons → `/product/ritual-box`, nav/footer links to track/support/policies). The two copies are now separate; edit `platform/public/landing.html`.
+`site/index.html` was copied into `platform/public/landing.html` and edited there (order section turned into the shop, nav got cart + ⋮ menu, footer links to track/support/policies). The two copies are now separate; edit `platform/public/landing.html`.
 
 ## Stack (versions pinned on purpose)
 
@@ -96,7 +96,6 @@ src/app/
   layout.tsx              fonts (Fraunces, Cormorant Garamond, Jost, Tiro Devanagari Hindi) as CSS vars
   globals.css             design tokens + every class used by store, admin and invoice
   (store)/layout.tsx      header/footer, CartProvider, test-mode banner
-  (store)/product/[slug]  page.tsx (server) + ProductBuy.tsx (client: shade, qty, add/buy); ?shade=burgundy preselects
   (store)/cart            CartView (client)
   (store)/checkout        page.tsx prefills from user's last order; CheckoutForm.tsx does pincode check, POST /api/checkout, Razorpay modal / test dialog, verify
   (store)/orders/[number] customer order page: progress, timeline, courier scans, cancel, return form, invoice link
@@ -116,15 +115,12 @@ src/app/
   api/webhooks/courier    Shiprocket tracking webhook (x-api-key header)
   admin/                  layout (requireAdmin + sidebar counts), dashboard, orders (+filters.ts, export CSV route, [id]), returns, tickets (+[id]), products, customers
 src/components/
-  Cart.tsx                CartProvider/useCart (localStorage key "ak_cart_v1", max 10 per line), CartCount
+  Cart.tsx                CartProvider/useCart (localStorage key "ak_cart_v1", max 10 per line; refreshes prices from /api/catalog on load), CartCount
+  MoreMenu.tsx            the ⋮ menu in the store header (Track order, Account/Sign in, Help, Admin)
   ActionForm.tsx          ActionForm + useSubmit hook (THE way to build forms)
   AuthForm.tsx            login/register form
   OrderParts.tsx          Progress, Timeline, Items, Address
   ui.tsx                  Badge
-  box3d/                  the landing page's 3D carton for the product page: engine.ts (markup builders, lighting,
-                          drag/idle spin; copied from public/landing.html) + box3d.css (landing CSS scoped under .ak3d,
-                          lighting overlay renamed .shade → .shd to avoid the shade-button class). Box3D.tsx mounts it and
-                          updates the printed shade + glow tint. If the packaging changes in landing.html, update both.
 ```
 
 ## Data model and conventions
@@ -196,7 +192,7 @@ Each attempt creates a new order, so abandoned attempts stay as PENDING_PAYMENT.
 
 ## Design notes
 
-- The homepage (`public/landing.html`) is a single large hand-built HTML file: a 3D CSS box, scroll animations, custom cursor, and a loader that needs JS. It is served statically, outside React. **The ₹249 price is hard-coded in it** (nav button, order section, box art), so it won't follow price changes made in Admin → Products.
+- **The homepage is the shop.** `public/landing.html` is a single large hand-built HTML file (3D CSS box, scroll animations, custom cursor, loader) served statically outside React. Its order section (`#order`) sells the packs: a vanilla script at the end of the file loads `GET /api/catalog` (live packs, prices, shades, stock, free-shipping threshold), lets people pick pack + shade + quantity, and writes to the same `ak_cart_v1` localStorage cart the Next.js app uses (line shape: variantId, qty, name, variantName, price, colorHex, slug). The nav has Order now (→ #order), a cart icon with count, and a ⋮ menu (Track order, Account, Help). Link to the homepage from Next pages with plain `<a href="/">` / `<a href="/#order">`, not `<Link>` (it is not a Next route). The only hard-coded price left is the printed MRP ₹350 on the 3-sachet carton art.
 - Store pages work down to 375 px wide (checked); on mobile the header shows only Sign in / Account and Cart, and the footer carries the other links.
 
 ## Testing
@@ -214,7 +210,7 @@ To re-test end to end, use the "ayurkesha" preview config, sign in as admin with
 
 ## Known gaps and ideas (not built)
 
-- There is **no `/shop` page**: the owner disliked a second "home-like" screen, so it was removed (2026-10-23). `/shop` redirects to `/product/ritual-box` (next.config.ts), and every "Shop" link points there. If more products are added, ask before bringing back a listing page, and make it match the landing page's look.
+- There is **no shop or product page** (owner's decision, 2026-10-23/24: they disliked separate screens that looked like a second homepage). `/shop` and `/product/*` redirect to `/#order` (next.config.ts); "Shop" links go to `/`. Don't bring back a listing/product page without asking.
 - No coupons or discount codes, COD, reviews, wishlists, multiple saved addresses, email verification, password reset, rate limiting on login and checkout, or cleanup job for abandoned PENDING_PAYMENT orders.
 - No retry-payment button on an unpaid order; the customer re-checks out from the saved cart.
 - No upload support on tickets (customers are asked for photos but can't attach them; they use WhatsApp or email).

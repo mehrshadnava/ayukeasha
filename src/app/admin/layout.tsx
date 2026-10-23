@@ -27,7 +27,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <p>Payments: <b className={pm === "live" ? "gold" : ""}>{pm === "live" ? "Razorpay" : pm === "test" ? "test mode" : "off"}</b></p>
           <p>Shipping: <b className={sm === "live" ? "gold" : ""}>{sm === "live" ? "Shiprocket" : sm === "test" ? "test mode" : "off"}</b></p>
           <p className="mt-s">{admin.email}</p>
-          <div className="row mt-s"><Link href="/" className="link">View store</Link><form action={logout}><button className="link">Sign out</button></form></div>
+          <div className="row mt-s"><a href="/" className="link">View store</a><form action={logout}><button className="link">Sign out</button></form></div>
         </div>
       </aside>
       <div className="adm-main">{children}</div>

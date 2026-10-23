@@ -58,7 +58,7 @@ export default async function Products() {
                 <label className="row small"><input type="checkbox" name="active" defaultChecked={p.active} /> Visible in shop</label>
               </div>
             </ActionForm>
-            <p className="hint mt-s">Weight and box size are sent to Shiprocket for courier rates — keep them accurate to avoid weight-discrepancy charges. Note: the homepage price (₹249) is part of the landing page design in public/landing.html.</p>
+            <p className="hint mt-s">Weight and box size are sent to Shiprocket for courier rates — keep them accurate to avoid weight-discrepancy charges. Prices and stock here are what the homepage shop shows (it loads them live).</p>
           </div>
         </div>
       ))}

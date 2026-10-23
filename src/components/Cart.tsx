@@ -23,11 +23,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    let stored: CartLine[] = [];
     try {
       const raw = localStorage.getItem(KEY);
-      if (raw) setLines(JSON.parse(raw));
+      if (raw) stored = JSON.parse(raw);
     } catch {}
+    setLines(stored);
     setReady(true);
+    if (!stored.length) return;
+    // Lines can be stale (price changed, pack removed); refresh them from the live catalog.
+    fetch("/api/catalog")
+      .then((r) => r.json())
+      .then((c: { packs: { slug: string; name: string; price: number; shades: { id: string; name: string; colorHex: string }[] }[] }) => {
+        const byId = new Map(c.packs.flatMap((p) => p.shades.map((s) => [s.id, { p, s }] as const)));
+        setLines((ls) => ls.flatMap((l) => {
+          const hit = byId.get(l.variantId);
+          return hit ? [{ ...l, name: hit.p.name, price: hit.p.price, slug: hit.p.slug, variantName: hit.s.name, colorHex: hit.s.colorHex }] : [];
+        }));
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {

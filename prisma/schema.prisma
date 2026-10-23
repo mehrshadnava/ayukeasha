@@ -31,6 +31,7 @@ model Product {
   tagline     String
   description String
   highlights  String // newline-separated
+  packSize    Int       @default(1) // sachets in the pack
   price       Int
   mrp         Int
   gstRate     Int       @default(18)
