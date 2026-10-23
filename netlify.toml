@@ -2,6 +2,13 @@
   command = "npm run build"
   publish = ".next"
 
+# Homepage is the static landing page. next.config.ts does the same rewrite for local dev,
+# but on Netlify public/ files live on the CDN, not inside the server function.
+[[redirects]]
+  from = "/"
+  to = "/landing.html"
+  status = 200
+
 # Runs the Next.js server parts (pages, API routes, server actions) as Netlify Functions.
 [[plugins]]
   package = "@netlify/plugin-nextjs"
