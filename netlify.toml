@@ -1,0 +1,20 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+# Homepage is the static landing page. next.config.ts does the same rewrite for local dev,
+# but on Netlify public/ files live on the CDN, not inside the server function.
+[[redirects]]
+  from = "/"
+  to = "/landing.html"
+  status = 200
+
+# Runs the Next.js server parts (pages, API routes, server actions) as Netlify Functions.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "24"
+  NEXT_TELEMETRY_DISABLED = "1"
+  # Public business details that legitimately appear in the site; real secrets are still scanned.
+  SECRETS_SCAN_OMIT_KEYS = "SELLER_NAME,SELLER_ADDRESS,SELLER_STATE,SELLER_PINCODE,SELLER_PHONE,SELLER_EMAIL,MAIL_FROM,SHIPROCKET_PICKUP_LOCATION,ALLOW_TEST_MODE"

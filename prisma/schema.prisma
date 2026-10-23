@@ -1,0 +1,179 @@
+generator client {
+  provider      = "prisma-client-js"
+  // rhel-openssl-3.0.x = Netlify / AWS Lambda runtime
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Money is stored in paise (integer). Status fields are strings; allowed values live in src/lib/status.ts.
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  phone        String?
+  passwordHash String
+  role         String   @default("CUSTOMER")
+  createdAt    DateTime @default(now())
+  orders       Order[]
+  tickets      Ticket[]
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  tagline     String
+  description String
+  highlights  String // newline-separated
+  price       Int
+  mrp         Int
+  gstRate     Int       @default(18)
+  hsn         String    @default("3305")
+  weightGrams Int       @default(250)
+  lengthCm    Int       @default(20)
+  breadthCm   Int       @default(14)
+  heightCm    Int       @default(6)
+  active      Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  variants    Variant[]
+}
+
+model Variant {
+  id        String      @id @default(cuid())
+  productId String
+  product   Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String
+  hindiName String      @default("")
+  colorHex  String      @default("#17120f")
+  sku       String      @unique
+  stock     Int         @default(0)
+  active    Boolean     @default(true)
+  sortOrder Int         @default(0)
+  items     OrderItem[]
+}
+
+model Order {
+  id                   String         @id @default(cuid())
+  number               String         @unique
+  accessToken          String
+  userId               String?
+  user                 User?          @relation(fields: [userId], references: [id])
+  name                 String
+  email                String
+  phone                String
+  address1             String
+  address2             String         @default("")
+  city                 String
+  state                String
+  pincode              String
+  subtotal             Int
+  shippingFee          Int
+  total                Int
+  status               String         @default("PENDING_PAYMENT")
+  paymentStatus        String         @default("PENDING")
+  razorpayOrderId      String?        @unique
+  razorpayPaymentId    String?
+  refundedAmount       Int            @default(0)
+  paidAt               DateTime?
+  shiprocketOrderId    String?
+  shiprocketShipmentId String?
+  awbCode              String?
+  courierName          String?
+  labelUrl             String?
+  trackingUrl          String?
+  estimatedDelivery    String?
+  shippedAt            DateTime?
+  deliveredAt          DateTime?
+  cancelledAt          DateTime?
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  items                OrderItem[]
+  events               OrderEvent[]
+  tickets              Ticket[]
+  returnRequest        ReturnRequest?
+
+  @@index([status])
+  @@index([email])
+}
+
+model OrderItem {
+  id          String  @id @default(cuid())
+  orderId     String
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variantId   String
+  variant     Variant @relation(fields: [variantId], references: [id])
+  productName String
+  variantName String
+  sku         String
+  unitPrice   Int
+  quantity    Int
+  gstRate     Int
+  hsn         String
+}
+
+model OrderEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status    String?
+  message   String
+  source    String   @default("SYSTEM")
+  internal  Boolean  @default(false)
+  location  String?
+  createdAt DateTime @default(now())
+
+  @@index([orderId, createdAt])
+}
+
+model ReturnRequest {
+  id                   String   @id @default(cuid())
+  orderId              String   @unique
+  order                Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  reason               String
+  details              String   @default("")
+  status               String   @default("REQUESTED")
+  refundAmount         Int      @default(0)
+  shiprocketOrderId    String?
+  shiprocketShipmentId String?
+  awbCode              String?
+  adminNote            String   @default("")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model Ticket {
+  id          String          @id @default(cuid())
+  number      String          @unique
+  accessToken String
+  userId      String?
+  user        User?           @relation(fields: [userId], references: [id])
+  orderId     String?
+  order       Order?          @relation(fields: [orderId], references: [id])
+  name        String
+  email       String
+  phone       String          @default("")
+  subject     String
+  category    String
+  status      String          @default("OPEN")
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  messages    TicketMessage[]
+
+  @@index([status])
+}
+
+model TicketMessage {
+  id        String   @id @default(cuid())
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  author    String
+  body      String
+  createdAt DateTime @default(now())
+}
