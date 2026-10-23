@@ -5,3 +5,5 @@
 [build.environment]
   NODE_VERSION = "24"
   NEXT_TELEMETRY_DISABLED = "1"
+  # Public business details that legitimately appear in the site; real secrets are still scanned.
+  SECRETS_SCAN_OMIT_KEYS = "SELLER_NAME,SELLER_ADDRESS,SELLER_STATE,SELLER_PINCODE,SELLER_PHONE,SELLER_EMAIL,MAIL_FROM,SHIPROCKET_PICKUP_LOCATION"
